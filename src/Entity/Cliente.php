@@ -2,87 +2,78 @@
 
 namespace App\Entity;
 
+use App\Repository\ClienteRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * Cliente
- *
- * @ORM\Table(name="clientes", uniqueConstraints={@ORM\UniqueConstraint(name="email", columns={"email"}), @ORM\UniqueConstraint(name="dni", columns={"dni"})})
- * @ORM\Entity
+ * @ORM\Table(name="clientes")
+ * @ORM\Entity(repositoryClass=ClienteRepository::class)
  */
-class Cliente
+class Cliente implements UserInterface
 {
     /**
-     * @var null|int
-     *
-     * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
      */
-    private ?int $id = 0;
+    private $id;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="email", type="string", length=200, nullable=false)
+     * @ORM\Column(type="string", length=180, unique=true)
      */
-    private string $email;
+    private $email;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="dni", type="string", length=15, nullable=false)
+     * @ORM\Column(type="json")
      */
-    private string $dni;
+    private $roles = [];
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="clave", type="string", length=200, nullable=false)
+     * @var string The hashed password
+     * @ORM\Column(type="string")
      */
-    private string $clave;
+    private $password;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="nombre", type="string", length=50, nullable=false)
+     * @ORM\Column(type="string", length=15)
      */
-    private string $nombre;
+    private $dni;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="apellidos", type="string", length=100, nullable=false)
+     * @ORM\Column(type="string", length=255)
      */
-    private string $apellidos;
+    private $nombre;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="direccion", type="string", length=200, nullable=false)
+     * @ORM\Column(type="string", length=255)
      */
-    private string $direccion;
+    private $apellidos;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="telefono", type="string", length=20, nullable=false)
+     * @ORM\Column(type="string", length=255)
      */
-    private string $telefono;
+    private $direccion;
 
     /**
-     * @var string|null
-     *
-     * @ORM\Column(name="nacionalidad", type="string", length=50, nullable=true)
+     * @ORM\Column(type="string", length=20)
      */
-    private ?string $nacionalidad;
+    private $telefono;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="codigo_postal", type="string", length=10, nullable=false)
+     * @ORM\Column(type="string", length=50, nullable=true)
      */
-    private string $codigoPostal;
+    private $nacionalidad;
+
+    /**
+     * @ORM\Column(type="string", length=10)
+     */
+    private $codigo_postal;
+
+    /**
+     * @ORM\Column(type="datetime", options={"default": "CURRENT_TIMESTAMP"})
+     */
+    private $creado;
 
     public function getId(): ?int
     {
@@ -101,6 +92,70 @@ class Cliente
         return $this;
     }
 
+    /**
+     * A visual identifier that represents this user.
+     *
+     * @see UserInterface
+     */
+    public function getUsername(): string
+    {
+        return (string) $this->email;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function getRoles(): array
+    {
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
+    }
+
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function getPassword(): string
+    {
+        return (string) $this->password;
+    }
+
+    public function setPassword(string $password): self
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+    /**
+     * Returning a salt is only needed, if you are not using a modern
+     * hashing algorithm (e.g. bcrypt or sodium) in your security.yaml.
+     *
+     * @see UserInterface
+     */
+    public function getSalt(): ?string
+    {
+        return null;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function eraseCredentials()
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
+    }
+
     public function getDni(): ?string
     {
         return $this->dni;
@@ -109,18 +164,6 @@ class Cliente
     public function setDni(string $dni): self
     {
         $this->dni = $dni;
-
-        return $this;
-    }
-
-    public function getClave(): ?string
-    {
-        return $this->clave;
-    }
-
-    public function setClave(string $clave): self
-    {
-        $this->clave = $clave;
 
         return $this;
     }
@@ -187,15 +230,25 @@ class Cliente
 
     public function getCodigoPostal(): ?string
     {
-        return $this->codigoPostal;
+        return $this->codigo_postal;
     }
 
-    public function setCodigoPostal(string $codigoPostal): self
+    public function setCodigoPostal(string $codigo_postal): self
     {
-        $this->codigoPostal = $codigoPostal;
+        $this->codigo_postal = $codigo_postal;
 
         return $this;
     }
 
+    public function getCreado(): ?\DateTimeInterface
+    {
+        return $this->creado;
+    }
 
+    public function setCreado(\DateTimeInterface $creado): self
+    {
+        $this->creado = $creado;
+
+        return $this;
+    }
 }

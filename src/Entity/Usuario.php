@@ -2,96 +2,148 @@
 
 namespace App\Entity;
 
+use App\Repository\UsuarioRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * Usuario
- *
- * @ORM\Table(name="usuarios", uniqueConstraints={@ORM\UniqueConstraint(name="email", columns={"email"}), @ORM\UniqueConstraint(name="dni", columns={"dni"}), @ORM\UniqueConstraint(name="usuario", columns={"usuario"})})
- * @ORM\Entity
- * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
+ * @ORM\Table(name="usuarios")
+ * @ORM\Entity(repositoryClass=UsuarioRepository::class)
  */
-class Usuario
+class Usuario implements UserInterface
 {
-
-    public const ADMIM = "admin";
-    public const EMPLEADO = "empleado";
-
     /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
      */
-    private int $id;
+    private $id;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="email", type="string", length=200, nullable=false)
+     * @ORM\Column(type="string", length=180, unique=true)
      */
-    private string $email;
+    private $usuario;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="dni", type="string", length=50, nullable=false)
+     * @ORM\Column(type="json")
      */
-    private string $dni;
+    private $roles = [];
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="usuario", type="string", length=200, nullable=false)
+     * @var string The hashed password
+     * @ORM\Column(type="string")
      */
-    private string $usuario;
+    private $password;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="clave", type="string", length=255, nullable=false)
+     * @ORM\Column(type="string", length=200, unique=true)
      */
-    private string $clave;
+    private $email;
 
     /**
-     * @var bool
-     *
-     * @ORM\Column(name="activo", type="boolean", nullable=false, options={"default"="1"})
+     * @ORM\Column(type="string", length=15, unique=true)
      */
-    private bool $activo = true;
+    private $dni;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="nombre", type="string", length=255, nullable=false)
+     * @ORM\Column(type="boolean", options={"default"="1"})
      */
-    private string $nombre;
+    private $activo = true;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="apellidos", type="string", length=255, nullable=false)
+     * @ORM\Column(type="string", length=255)
      */
-    private string $apellidos;
+    private $nombre;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="tipo", type="string", length=0, nullable=false)
+     * @ORM\Column(type="string", length=255)
      */
-    private string $tipo;
+    private $apellidos;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="datetime", options={"default": "CURRENT_TIMESTAMP"})
      */
-    private $isVerified = false;
+    private $creado;
 
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getUsuario(): ?string
+    {
+        return $this->usuario;
+    }
+
+    public function setUsuario(string $usuario): self
+    {
+        $this->usuario = $usuario;
+
+        return $this;
+    }
+
+    /**
+     * A visual identifier that represents this user.
+     *
+     * @see UserInterface
+     */
+    public function getUsername(): string
+    {
+        return (string) $this->usuario;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function getRoles(): array
+    {
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
+    }
+
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function getPassword(): string
+    {
+        return (string) $this->password;
+    }
+
+    public function setPassword(string $password): self
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+    /**
+     * Returning a salt is only needed, if you are not using a modern
+     * hashing algorithm (e.g. bcrypt or sodium) in your security.yaml.
+     *
+     * @see UserInterface
+     */
+    public function getSalt(): ?string
+    {
+        return null;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function eraseCredentials()
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
     }
 
     public function getEmail(): ?string
@@ -114,30 +166,6 @@ class Usuario
     public function setDni(string $dni): self
     {
         $this->dni = $dni;
-
-        return $this;
-    }
-
-    public function getUsuario(): ?string
-    {
-        return $this->usuario;
-    }
-
-    public function setUsuario(string $usuario): self
-    {
-        $this->usuario = $usuario;
-
-        return $this;
-    }
-
-    public function getClave(): ?string
-    {
-        return $this->clave;
-    }
-
-    public function setClave(string $clave): self
-    {
-        $this->clave = $clave;
 
         return $this;
     }
@@ -178,24 +206,22 @@ class Usuario
         return $this;
     }
 
-    public function getTipo(): ?string
+    public function getCreado(): ?\DateTimeInterface
     {
-        return $this->tipo;
+        return $this->creado;
     }
 
-    public function setTipo(string $tipo): self
+    public function setCreado(\DateTimeInterface $creado): self
     {
-        $this->tipo = $tipo;
+        $this->creado = $creado;
 
         return $this;
     }
 
-    /**
-     * Nos dice si el usuario en cuestión es de tipo admin o no
-     * @return bool Con el resultado de la pregunta
-     */
-    public function esAdmin(): bool
+    public function __toString()
     {
-        return $this->tipo === self::ADMIM;
+        return $this->nombre.' '.$this->apellidos;
     }
+
+
 }
