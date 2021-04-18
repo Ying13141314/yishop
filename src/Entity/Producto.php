@@ -13,13 +13,11 @@ use Doctrine\ORM\Mapping as ORM;
 class Producto
 {
     /**
-     * @var null|int
-     *
-     * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
      */
-    private ?int $id = 0;
+    private $id;
 
     /**
      * @var string

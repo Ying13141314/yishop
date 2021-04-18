@@ -3,12 +3,12 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Cliente;
+use App\Entity\Pedido;
 use App\Entity\Producto;
+use App\Entity\Usuario;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 
 class AdminDashboardController extends AbstractDashboardController
 {
@@ -23,7 +23,9 @@ class AdminDashboardController extends AbstractDashboardController
         return [
             MenuItem::linkToDashboard('Escritorio', 'fa fa-home'),
             MenuItem::linkToCrud('Clientes', 'fa fa-tags', Cliente::class),
-            MenuItem::linkToCrud('Productos', 'fa fa-file-text', Producto::class)
+            MenuItem::linkToCrud('Productos', 'fa fa-file-text', Producto::class),
+            MenuItem::linkToCrud('Pedidos', 'fa fa-file-text', Pedido::class),
+            MenuItem::linkToCrud('Usuarios', 'fa fa-file-text', Usuario::class)
         ];
     }
 }

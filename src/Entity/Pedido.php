@@ -19,20 +19,18 @@ class Pedido
     public const CANCELADO = "cancelado";
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
      */
-    private int $id;
+    private $id;
 
     /**
      * @var DateTime
      *
      * @ORM\Column(name="fecha", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $fecha = 'CURRENT_TIMESTAMP';
+    private DateTime $fecha;
 
     /**
      * @var string
