@@ -36,7 +36,7 @@ class Producto
     /**
      * @var string
      *
-     * @ORM\Column(name="descripcion", type="string", length=50, nullable=false)
+     * @ORM\Column(name="descripcion", type="text", nullable=false)
      */
     private string $descripcion;
 
@@ -74,6 +74,11 @@ class Producto
      * @ORM\Column(name="imagen", type="string", length=50, nullable=true)
      */
     private ?string $imagen;
+
+    /**
+     * @ORM\Column(type="datetime", options={"default": "CURRENT_TIMESTAMP"})
+     */
+    private $creado;
 
     public function getId(): ?int
     {
@@ -175,6 +180,19 @@ class Producto
 
         return $this;
     }
+
+    public function getCreado(): ?\DateTimeInterface
+    {
+        return $this->creado;
+    }
+
+    public function setCreado(\DateTimeInterface $creado): self
+    {
+        $this->creado = $creado;
+
+        return $this;
+    }
+    
 
 
 }

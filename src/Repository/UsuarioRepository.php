@@ -40,7 +40,7 @@ class UsuarioRepository extends ServiceEntityRepository implements PasswordUpgra
     //  * @return Usuario[] Returns an array of Usuario objects
     //  */
     /*
-    public function findByExampleField($value)
+    Publico function findByExampleField($value)
     {
         return $this->createQueryBuilder('u')
             ->andWhere('u.exampleField = :val')
@@ -54,7 +54,7 @@ class UsuarioRepository extends ServiceEntityRepository implements PasswordUpgra
     */
 
     /*
-    public function findOneBySomeField($value): ?Usuario
+    Publico function findOneBySomeField($value): ?Usuario
     {
         return $this->createQueryBuilder('u')
             ->andWhere('u.exampleField = :val')

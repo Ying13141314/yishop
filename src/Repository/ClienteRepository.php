@@ -40,7 +40,7 @@ class ClienteRepository extends ServiceEntityRepository implements PasswordUpgra
     //  * @return Cliente[] Returns an array of Cliente objects
     //  */
     /*
-    public function findByExampleField($value)
+    Publico function findByExampleField($value)
     {
         return $this->createQueryBuilder('c')
             ->andWhere('c.exampleField = :val')
@@ -54,7 +54,7 @@ class ClienteRepository extends ServiceEntityRepository implements PasswordUpgra
     */
 
     /*
-    public function findOneBySomeField($value): ?Cliente
+    Publico function findOneBySomeField($value): ?Cliente
     {
         return $this->createQueryBuilder('c')
             ->andWhere('c.exampleField = :val')

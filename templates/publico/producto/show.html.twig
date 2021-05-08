@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}producto Guestbook - {{ producto }}{% endblock %}
+
+{% block body %}
+    <h2>{{ producto.nombre }}</h2>
+            <h4>{{ producto.nombre }}</h4>
+            <small>
+                {{ producto.getCreado|format_datetime('medium', 'short') }}
+            </small>
+            <p>{{ producto.descripcion }}</p>
+        <div>No comments have been posted yet for this conference.</div>
+{% endblock %}

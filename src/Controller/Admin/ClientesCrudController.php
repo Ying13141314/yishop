@@ -13,7 +13,7 @@ class ClientesCrudController extends AbstractCrudController
     }
 
     /*
-    public function configureFields(string $pageName): iterable
+    Publico function configureFields(string $pageName): iterable
     {
         return [
             IdField::new('id'),
