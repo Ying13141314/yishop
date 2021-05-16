@@ -18,42 +18,42 @@ class CategoriasProductos
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Producto::class, inversedBy="idCategoria")
+     * @ORM\ManyToOne(targetEntity=Producto::class, inversedBy="relacion")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $idProducto;
+    private $producto;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Categoria::class, inversedBy="idProducto")
+     * @ORM\ManyToOne(targetEntity=Categoria::class, inversedBy="relacion")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $idCategoria;
+    private $categoria;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getIdProducto(): ?Producto
+    public function getProducto(): ?Producto
     {
-        return $this->idProducto;
+        return $this->producto;
     }
 
-    public function setIdProducto(?Producto $idProducto): self
+    public function setProducto(?Producto $producto): self
     {
-        $this->idProducto = $idProducto;
+        $this->producto = $producto;
 
         return $this;
     }
 
-    public function getIdCategoria(): ?Categoria
+    public function getCategoria(): ?Categoria
     {
-        return $this->idCategoria;
+        return $this->categoria;
     }
 
-    public function setIdCategoria(?Categoria $idCategoria): self
+    public function setCategoria(?Categoria $categoria): self
     {
-        $this->idCategoria = $idCategoria;
+        $this->categoria = $categoria;
 
         return $this;
     }

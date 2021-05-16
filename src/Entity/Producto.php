@@ -90,18 +90,13 @@ class Producto
      * @var DateTimeInterface
      */
     private DateTimeInterface $actualizado;
-
-    /**
-     * @ORM\ManyToMany(targetEntity=Categoria::class, inversedBy="productos")
-     */
-    private $categorias;
+    
 
     public function __construct()
     {
         $this->imagenes = new ArrayCollection();
         $this->setCreado(new DateTime());
         $this->setActualizado(new DateTime());
-        $this->categorias = new ArrayCollection();
     }
 
     public function getId()
@@ -244,30 +239,6 @@ class Producto
                 $imagen->eliminarImagen();
             }
         }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Categoria[]
-     */
-    public function getCategoria(): Collection
-    {
-        return $this->categorias;
-    }
-
-    public function addCategorium(Categoria $categorium): self
-    {
-        if (!$this->categorias->contains($categorium)) {
-            $this->categorias[] = $categorium;
-        }
-
-        return $this;
-    }
-
-    public function removeCategorium(Categoria $categorium): self
-    {
-        $this->categorias->removeElement($categorium);
 
         return $this;
     }

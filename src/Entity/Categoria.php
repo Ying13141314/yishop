@@ -97,7 +97,7 @@ class Categoria
     {
         if (!$this->relacion->contains($relacion)) {
             $this->relacion[] = $relacion;
-            $relacion->setIdCategoria($this);
+            $relacion->setCategoria($this);
         }
 
         return $this;
@@ -107,8 +107,8 @@ class Categoria
     {
         if ($this->relacion->removeElement($relacion)) {
             // set the owning side to null (unless already changed)
-            if ($relacion->getIdCategoria() === $this) {
-                $relacion->setIdCategoria(null);
+            if ($relacion->getCategoria() === $this) {
+                $relacion->setCategoria(null);
             }
         }
 
