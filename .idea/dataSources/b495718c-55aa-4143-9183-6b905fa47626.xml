@@ -849,321 +849,390 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
     </user>
     <table id="238" parent="10" name="clientes"/>
     <table id="239" parent="10" name="detalle_pedido"/>
-    <table id="240" parent="10" name="pedidos"/>
-    <table id="241" parent="10" name="productos"/>
-    <table id="242" parent="10" name="usuarios"/>
-    <column id="243" parent="238" name="id">
+    <table id="240" parent="10" name="doctrine_migration_versions">
+      <Collation>utf8_unicode_ci</Collation>
+    </table>
+    <table id="241" parent="10" name="imagenes_producto"/>
+    <table id="242" parent="10" name="pedidos"/>
+    <table id="243" parent="10" name="productos"/>
+    <table id="244" parent="10" name="usuarios"/>
+    <column id="245" parent="238" name="id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="244" parent="238" name="email">
+    <column id="246" parent="238" name="email">
       <Position>2</Position>
-      <DataType>varchar(200)|0s</DataType>
+      <DataType>varchar(180)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="245" parent="238" name="dni">
+    <column id="247" parent="238" name="roles">
       <Position>3</Position>
+      <DataType>json|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="248" parent="238" name="password">
+      <Position>4</Position>
+      <DataType>varchar(255)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="249" parent="238" name="dni">
+      <Position>5</Position>
       <DataType>varchar(15)|0s</DataType>
       <NotNull>1</NotNull>
-      <DefaultExpression>&apos;&apos;</DefaultExpression>
     </column>
-    <column id="246" parent="238" name="clave">
-      <Position>4</Position>
-      <DataType>varchar(200)|0s</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <column id="247" parent="238" name="nombre">
-      <Position>5</Position>
-      <DataType>varchar(50)|0s</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <column id="248" parent="238" name="apellidos">
+    <column id="250" parent="238" name="nombre">
       <Position>6</Position>
-      <DataType>varchar(100)|0s</DataType>
+      <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="249" parent="238" name="direccion">
+    <column id="251" parent="238" name="apellidos">
       <Position>7</Position>
-      <DataType>varchar(200)|0s</DataType>
+      <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="250" parent="238" name="telefono">
+    <column id="252" parent="238" name="direccion">
       <Position>8</Position>
+      <DataType>varchar(255)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="253" parent="238" name="telefono">
+      <Position>9</Position>
       <DataType>varchar(20)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="251" parent="238" name="nacionalidad">
-      <Position>9</Position>
+    <column id="254" parent="238" name="nacionalidad">
+      <Position>10</Position>
       <DataType>varchar(50)|0s</DataType>
     </column>
-    <column id="252" parent="238" name="codigo_postal">
-      <Position>10</Position>
+    <column id="255" parent="238" name="codigo_postal">
+      <Position>11</Position>
       <DataType>varchar(10)|0s</DataType>
       <NotNull>1</NotNull>
-      <DefaultExpression>&apos;&apos;</DefaultExpression>
     </column>
-    <index id="253" parent="238" name="email">
-      <ColNames>email</ColNames>
-      <Unique>1</Unique>
-      <Type>btree</Type>
-    </index>
-    <index id="254" parent="238" name="dni">
-      <ColNames>dni</ColNames>
-      <Unique>1</Unique>
-      <Type>btree</Type>
-    </index>
-    <key id="255" parent="238" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
-      <ColNames>id</ColNames>
-      <Primary>1</Primary>
-    </key>
-    <key id="256" parent="238" name="email">
-      <ColNames>email</ColNames>
-      <UnderlyingIndexName>email</UnderlyingIndexName>
-    </key>
-    <key id="257" parent="238" name="dni">
-      <ColNames>dni</ColNames>
-      <UnderlyingIndexName>dni</UnderlyingIndexName>
-    </key>
-    <column id="258" parent="239" name="id">
-      <Position>1</Position>
-      <DataType>int(11)|0s</DataType>
-      <NotNull>1</NotNull>
-      <SequenceIdentity>null</SequenceIdentity>
-    </column>
-    <column id="259" parent="239" name="idPedido">
-      <Position>2</Position>
-      <DataType>int(11)|0s</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <column id="260" parent="239" name="idProducto">
-      <Position>3</Position>
-      <DataType>int(11)|0s</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <column id="261" parent="239" name="cantidad">
-      <Position>4</Position>
-      <DataType>int(11)|0s</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <column id="262" parent="239" name="precio_unidad">
-      <Position>5</Position>
-      <DataType>int(11)|0s</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <index id="263" parent="239" name="FK_detalle_pedido_pedidos">
-      <ColNames>idPedido</ColNames>
-      <Type>btree</Type>
-    </index>
-    <index id="264" parent="239" name="FK_detalle_pedido_productos">
-      <ColNames>idProducto</ColNames>
-      <Type>btree</Type>
-    </index>
-    <key id="265" parent="239" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
-      <ColNames>id</ColNames>
-      <Primary>1</Primary>
-    </key>
-    <foreign-key id="266" parent="239" name="FK_detalle_pedido_pedidos">
-      <ColNames>idPedido</ColNames>
-      <RefTableName>pedidos</RefTableName>
-      <RefColNames>id</RefColNames>
-    </foreign-key>
-    <foreign-key id="267" parent="239" name="FK_detalle_pedido_productos">
-      <ColNames>idProducto</ColNames>
-      <RefTableName>productos</RefTableName>
-      <RefColNames>id</RefColNames>
-    </foreign-key>
-    <column id="268" parent="240" name="id">
-      <Position>1</Position>
-      <DataType>int(11)|0s</DataType>
-      <NotNull>1</NotNull>
-      <SequenceIdentity>null</SequenceIdentity>
-    </column>
-    <column id="269" parent="240" name="idCliente">
-      <Position>2</Position>
-      <DataType>int(11)|0s</DataType>
-    </column>
-    <column id="270" parent="240" name="fecha">
-      <Position>3</Position>
+    <column id="256" parent="238" name="creado">
+      <Position>12</Position>
       <DataType>datetime|0s</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
     </column>
-    <column id="271" parent="240" name="estado">
-      <Position>4</Position>
-      <DataType>enum(&apos;enviado&apos;, &apos;recibido&apos;, &apos;en proceso&apos;, &apos;cancelado&apos;)|0e</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <column id="272" parent="240" name="direccion">
-      <Position>5</Position>
-      <DataType>varchar(200)|0s</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <column id="273" parent="240" name="codigo_postal">
-      <Position>6</Position>
-      <DataType>varchar(10)|0s</DataType>
-      <NotNull>1</NotNull>
-      <DefaultExpression>&apos;&apos;</DefaultExpression>
-    </column>
-    <index id="274" parent="240" name="FK_pedidos_clientes">
-      <ColNames>idCliente</ColNames>
+    <index id="257" parent="238" name="UNIQ_50FE07D7E7927C74">
+      <ColNames>email</ColNames>
+      <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <key id="275" parent="240" name="PRIMARY">
+    <key id="258" parent="238" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="276" parent="240" name="FK_pedidos_clientes">
+    <key id="259" parent="238" name="UNIQ_50FE07D7E7927C74">
+      <ColNames>email</ColNames>
+      <UnderlyingIndexName>UNIQ_50FE07D7E7927C74</UnderlyingIndexName>
+    </key>
+    <column id="260" parent="239" name="id">
+      <Position>1</Position>
+      <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>null</SequenceIdentity>
+    </column>
+    <column id="261" parent="239" name="cantidad">
+      <Position>2</Position>
+      <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="262" parent="239" name="precio_unidad">
+      <Position>3</Position>
+      <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="263" parent="239" name="idPedido">
+      <Position>4</Position>
+      <DataType>int(11)|0s</DataType>
+    </column>
+    <column id="264" parent="239" name="idProducto">
+      <Position>5</Position>
+      <DataType>int(11)|0s</DataType>
+    </column>
+    <index id="265" parent="239" name="FK_detalle_pedido_pedidos">
+      <ColNames>idPedido</ColNames>
+      <Type>btree</Type>
+    </index>
+    <index id="266" parent="239" name="FK_detalle_pedido_productos">
+      <ColNames>idProducto</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="267" parent="239" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="268" parent="239" name="FK_A834F569A7FDBE54">
+      <ColNames>idPedido</ColNames>
+      <RefTableName>pedidos</RefTableName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <foreign-key id="269" parent="239" name="FK_A834F569F4182C4E">
+      <ColNames>idProducto</ColNames>
+      <RefTableName>productos</RefTableName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <column id="270" parent="240" name="version">
+      <Position>1</Position>
+      <DataType>varchar(191)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="271" parent="240" name="executed_at">
+      <Position>2</Position>
+      <DataType>datetime|0s</DataType>
+    </column>
+    <column id="272" parent="240" name="execution_time">
+      <Position>3</Position>
+      <DataType>int(11)|0s</DataType>
+    </column>
+    <key id="273" parent="240" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>version</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="274" parent="241" name="id">
+      <Position>1</Position>
+      <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>null</SequenceIdentity>
+    </column>
+    <column id="275" parent="241" name="producto_id">
+      <Position>2</Position>
+      <DataType>int(11)|0s</DataType>
+    </column>
+    <column id="276" parent="241" name="ruta">
+      <Position>3</Position>
+      <DataType>varchar(255)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="277" parent="241" name="creado">
+      <Position>4</Position>
+      <DataType>datetime|0s</DataType>
+      <NotNull>1</NotNull>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+    </column>
+    <column id="278" parent="241" name="actualizado">
+      <Position>5</Position>
+      <DataType>datetime|0s</DataType>
+      <NotNull>1</NotNull>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+    </column>
+    <index id="279" parent="241" name="IDX_7852D3337645698E">
+      <ColNames>producto_id</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="280" parent="241" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="281" parent="241" name="FK_7852D3337645698E">
+      <ColNames>producto_id</ColNames>
+      <RefTableName>productos</RefTableName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <column id="282" parent="242" name="id">
+      <Position>1</Position>
+      <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>null</SequenceIdentity>
+    </column>
+    <column id="283" parent="242" name="fecha">
+      <Position>2</Position>
+      <DataType>datetime|0s</DataType>
+      <NotNull>1</NotNull>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+    </column>
+    <column id="284" parent="242" name="estado">
+      <Position>3</Position>
+      <DataType>varchar(255)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="285" parent="242" name="direccion">
+      <Position>4</Position>
+      <DataType>varchar(200)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="286" parent="242" name="codigo_postal">
+      <Position>5</Position>
+      <DataType>varchar(10)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="287" parent="242" name="idCliente">
+      <Position>6</Position>
+      <DataType>int(11)|0s</DataType>
+    </column>
+    <index id="288" parent="242" name="FK_pedidos_clientes">
+      <ColNames>idCliente</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="289" parent="242" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="290" parent="242" name="FK_6716CCAAE4A5F0D7">
       <ColNames>idCliente</ColNames>
       <RefTableName>clientes</RefTableName>
       <RefColNames>id</RefColNames>
     </foreign-key>
-    <column id="277" parent="241" name="id">
+    <column id="291" parent="243" name="id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="278" parent="241" name="url">
+    <column id="292" parent="243" name="url">
       <Position>2</Position>
-      <DataType>varchar(250)|0s</DataType>
+      <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="279" parent="241" name="nombre">
+    <column id="293" parent="243" name="nombre">
       <Position>3</Position>
       <DataType>varchar(50)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="280" parent="241" name="descripcion">
+    <column id="294" parent="243" name="descripcion">
       <Position>4</Position>
-      <DataType>mediumtext|0s</DataType>
+      <DataType>text|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="281" parent="241" name="precio">
+    <column id="295" parent="243" name="precio">
       <Position>5</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="282" parent="241" name="peso">
+    <column id="296" parent="243" name="peso">
       <Position>6</Position>
       <DataType>int(11)|0s</DataType>
     </column>
-    <column id="283" parent="241" name="cantidad">
+    <column id="297" parent="243" name="cantidad">
       <Position>7</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="284" parent="241" name="activo">
+    <column id="298" parent="243" name="activo">
       <Position>8</Position>
       <DataType>tinyint(1)|0s</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>1</DefaultExpression>
     </column>
-    <column id="285" parent="241" name="imagen">
+    <column id="299" parent="243" name="creado">
       <Position>9</Position>
-      <DataType>varchar(50)|0s</DataType>
+      <DataType>datetime|0s</DataType>
+      <NotNull>1</NotNull>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
     </column>
-    <index id="286" parent="241" name="url">
+    <column id="300" parent="243" name="actualizado">
+      <Position>10</Position>
+      <DataType>datetime|0s</DataType>
+      <NotNull>1</NotNull>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+    </column>
+    <index id="301" parent="243" name="url">
       <ColNames>url</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <key id="287" parent="241" name="PRIMARY">
+    <key id="302" parent="243" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="288" parent="241" name="url">
+    <key id="303" parent="243" name="url">
       <ColNames>url</ColNames>
       <UnderlyingIndexName>url</UnderlyingIndexName>
     </key>
-    <column id="289" parent="242" name="id">
+    <column id="304" parent="244" name="id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="290" parent="242" name="email">
+    <column id="305" parent="244" name="usuario">
       <Position>2</Position>
-      <DataType>varchar(200)|0s</DataType>
+      <DataType>varchar(180)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="291" parent="242" name="dni">
+    <column id="306" parent="244" name="roles">
       <Position>3</Position>
-      <DataType>varchar(50)|0s</DataType>
+      <DataType>json|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="292" parent="242" name="usuario">
+    <column id="307" parent="244" name="password">
       <Position>4</Position>
-      <DataType>varchar(200)|0s</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <column id="293" parent="242" name="clave">
-      <Position>5</Position>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="294" parent="242" name="activo">
+    <column id="308" parent="244" name="email">
+      <Position>5</Position>
+      <DataType>varchar(200)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="309" parent="244" name="dni">
       <Position>6</Position>
+      <DataType>varchar(15)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="310" parent="244" name="activo">
+      <Position>7</Position>
       <DataType>tinyint(1)|0s</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>1</DefaultExpression>
     </column>
-    <column id="295" parent="242" name="nombre">
-      <Position>7</Position>
-      <DataType>varchar(255)|0s</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <column id="296" parent="242" name="apellidos">
+    <column id="311" parent="244" name="nombre">
       <Position>8</Position>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="297" parent="242" name="tipo">
+    <column id="312" parent="244" name="apellidos">
       <Position>9</Position>
-      <DataType>enum(&apos;admin&apos;, &apos;empleado&apos;)|0e</DataType>
+      <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="298" parent="242" name="is_verified">
+    <column id="313" parent="244" name="creado">
       <Position>10</Position>
-      <DataType>tinyint(1)|0s</DataType>
+      <DataType>datetime|0s</DataType>
       <NotNull>1</NotNull>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
     </column>
-    <index id="299" parent="242" name="email">
-      <ColNames>email</ColNames>
-      <Unique>1</Unique>
-      <Type>btree</Type>
-    </index>
-    <index id="300" parent="242" name="dni">
-      <ColNames>dni</ColNames>
-      <Unique>1</Unique>
-      <Type>btree</Type>
-    </index>
-    <index id="301" parent="242" name="usuario">
+    <index id="314" parent="244" name="UNIQ_EF687F22265B05D">
       <ColNames>usuario</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <key id="302" parent="242" name="PRIMARY">
+    <index id="315" parent="244" name="UNIQ_EF687F2E7927C74">
+      <ColNames>email</ColNames>
+      <Unique>1</Unique>
+      <Type>btree</Type>
+    </index>
+    <index id="316" parent="244" name="UNIQ_EF687F27F8F253B">
+      <ColNames>dni</ColNames>
+      <Unique>1</Unique>
+      <Type>btree</Type>
+    </index>
+    <key id="317" parent="244" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="303" parent="242" name="email">
-      <ColNames>email</ColNames>
-      <UnderlyingIndexName>email</UnderlyingIndexName>
-    </key>
-    <key id="304" parent="242" name="dni">
-      <ColNames>dni</ColNames>
-      <UnderlyingIndexName>dni</UnderlyingIndexName>
-    </key>
-    <key id="305" parent="242" name="usuario">
+    <key id="318" parent="244" name="UNIQ_EF687F22265B05D">
       <ColNames>usuario</ColNames>
-      <UnderlyingIndexName>usuario</UnderlyingIndexName>
+      <UnderlyingIndexName>UNIQ_EF687F22265B05D</UnderlyingIndexName>
+    </key>
+    <key id="319" parent="244" name="UNIQ_EF687F2E7927C74">
+      <ColNames>email</ColNames>
+      <UnderlyingIndexName>UNIQ_EF687F2E7927C74</UnderlyingIndexName>
+    </key>
+    <key id="320" parent="244" name="UNIQ_EF687F27F8F253B">
+      <ColNames>dni</ColNames>
+      <UnderlyingIndexName>UNIQ_EF687F27F8F253B</UnderlyingIndexName>
     </key>
   </database-model>
 </dataSource>

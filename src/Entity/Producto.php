@@ -2,6 +2,10 @@
 
 namespace App\Entity;
 
+use DateTime;
+use DateTimeInterface;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -20,179 +24,251 @@ class Producto
     private $id;
 
     /**
+     * @var string|null
+     *
+     * @ORM\OneToMany(targetEntity="ImagenesProducto", mappedBy="producto", cascade={"persist"})
+     */
+    private $imagenes;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="url", type="string", nullable=false)
      */
-    private string $url;
+    private $url;
 
     /**
      * @var string
      *
      * @ORM\Column(name="nombre", type="string", length=50, nullable=false)
      */
-    private string $nombre;
+    private $nombre;
 
     /**
      * @var string
      *
      * @ORM\Column(name="descripcion", type="text", nullable=false)
      */
-    private string $descripcion;
+    private $descripcion;
 
     /**
      * @var int
      *
      * @ORM\Column(name="precio", type="integer", nullable=false)
      */
-    private int $precio;
+    private $precio;
 
     /**
      * @var int|null
      *
      * @ORM\Column(name="peso", type="integer", nullable=true)
      */
-    private ?int $peso;
+    private $peso;
 
     /**
      * @var int
      *
      * @ORM\Column(name="cantidad", type="integer", nullable=false)
      */
-    private int $cantidad;
+    private $cantidad;
 
     /**
      * @var bool
      *
      * @ORM\Column(name="activo", type="boolean", nullable=false, options={"default"="1"})
      */
-    private bool $activo = true;
-
-    /**
-     * @var string|null
-     *
-     * @ORM\Column(name="imagen", type="string", length=50, nullable=true)
-     */
-    private ?string $imagen;
+    private $activo = true;
 
     /**
      * @ORM\Column(type="datetime", options={"default": "CURRENT_TIMESTAMP"})
+     * @var DateTimeInterface
      */
-    private $creado;
+    private DateTimeInterface $creado;
 
-    public function getId(): ?int
+    /**
+     * @ORM\Column(type="datetime", options={"default": "CURRENT_TIMESTAMP"})
+     * @var DateTimeInterface
+     */
+    private DateTimeInterface $actualizado;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Categoria::class, inversedBy="productos")
+     */
+    private $categorias;
+
+    public function __construct()
+    {
+        $this->imagenes = new ArrayCollection();
+        $this->setCreado(new DateTime());
+        $this->setActualizado(new DateTime());
+        $this->categorias = new ArrayCollection();
+    }
+
+    public function getId()
     {
         return $this->id;
     }
 
-    public function getUrl(): string
+    public function getUrl()
     {
         return $this->url;
     }
 
-    public function setUrl(string $url): self
+    public function setUrl(string $url)
     {
         $this->url = $url;
 
         return $this;
     }
 
-    public function getNombre(): ?string
+    public function getNombre()
     {
         return $this->nombre;
     }
 
-    public function setNombre(string $nombre): self
+    public function setNombre(string $nombre)
     {
         $this->nombre = $nombre;
 
         return $this;
     }
 
-    public function getDescripcion(): ?string
+    public function getDescripcion()
     {
         return $this->descripcion;
     }
 
-    public function setDescripcion(string $descripcion): self
+    public function setDescripcion(string $descripcion)
     {
         $this->descripcion = $descripcion;
 
         return $this;
     }
 
-    public function getPrecio(): ?int
+    public function getPrecio()
     {
         return $this->precio;
     }
 
-    public function setPrecio(int $precio): self
+    public function setPrecio(int $precio)
     {
         $this->precio = $precio;
 
         return $this;
     }
 
-    public function getPeso(): ?int
+    public function getPeso()
     {
         return $this->peso;
     }
 
-    public function setPeso(?int $peso): self
+    public function setPeso(?int $peso)
     {
         $this->peso = $peso;
 
         return $this;
     }
 
-    public function getCantidad(): ?int
+    public function getCantidad()
     {
         return $this->cantidad;
     }
 
-    public function setCantidad(int $cantidad): self
+    public function setCantidad(int $cantidad)
     {
         $this->cantidad = $cantidad;
 
         return $this;
     }
 
-    public function getActivo(): ?bool
+    public function getActivo()
     {
         return $this->activo;
     }
 
-    public function setActivo(bool $activo): self
+    public function setActivo(bool $activo)
     {
         $this->activo = $activo;
 
         return $this;
     }
 
-    public function getImagen(): ?string
-    {
-        return $this->imagen;
-    }
-
-    public function setImagen(?string $imagen): self
-    {
-        $this->imagen = $imagen;
-
-        return $this;
-    }
-
-    public function getCreado(): ?\DateTimeInterface
+    public function getCreado()
     {
         return $this->creado;
     }
 
-    public function setCreado(\DateTimeInterface $creado): self
+    public function setCreado($creado)
     {
         $this->creado = $creado;
 
         return $this;
     }
-    
 
+    public function getActualizado()
+    {
+        return $this->actualizado;
+    }
 
+    public function setActualizado($actualizado): self
+    {
+        $this->actualizado = $actualizado;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ImagenesProducto[]
+     */
+    public function getImagenes(): Collection
+    {
+        return $this->imagenes;
+    }
+
+    public function addImagene(ImagenesProducto $imagene): self
+    {
+        if (!$this->imagenes->contains($imagene)) {
+            $this->imagenes[] = $imagene;
+            $imagene->setProducto($this);
+        }
+
+        return $this;
+    }
+
+    public function removeImagene(ImagenesProducto $imagen): self
+    {
+        if ($this->imagenes->removeElement($imagen)) {
+            // set the owning side to null (unless already changed)
+            if ($imagen->getProducto() === $this) {
+                $imagen->setProducto(null);
+                $imagen->eliminarImagen();
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Categoria[]
+     */
+    public function getCategoria(): Collection
+    {
+        return $this->categorias;
+    }
+
+    public function addCategorium(Categoria $categorium): self
+    {
+        if (!$this->categorias->contains($categorium)) {
+            $this->categorias[] = $categorium;
+        }
+
+        return $this;
+    }
+
+    public function removeCategorium(Categoria $categorium): self
+    {
+        $this->categorias->removeElement($categorium);
+
+        return $this;
+    }
 }

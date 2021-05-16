@@ -3,11 +3,70 @@
 {% block title %}producto Guestbook - {{ producto }}{% endblock %}
 
 {% block body %}
-    <h2>{{ producto.nombre }}</h2>
-            <h4>{{ producto.nombre }}</h4>
-            <small>
-                {{ producto.getCreado|format_datetime('medium', 'short') }}
-            </small>
-            <p>{{ producto.descripcion }}</p>
-        <div>No comments have been posted yet for this conference.</div>
+    <div class="container-fluid">
+    <div class="row">
+        <div class="col-xxl-9 col-lg-8 col-md-12 col-sm-12">
+            <div id="carouselExampleInterval" class="carousel slide" data-mdb-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active" data-mdb-interval="10000">
+                        <img
+                            {% for imagen in producto.imagenes %}
+                            <img src="/img/productos/{{ imagen.ruta }}" class="card-img-top" alt="{{ producto.nombre }}" style="height: 100vh"
+                            {%  endfor %}
+                        />
+                    </div>
+                    <div class="carousel-item" data-mdb-interval="2000">
+                        <img
+                            {% for imagen in producto.imagenes %}
+                            <img src="/img/productos/{{ imagen.ruta }}" class="card-img-top" alt="{{ producto.nombre }}" style="height: 100vh"
+                            {%  endfor %}
+                        />
+                    </div>
+                    <div class="carousel-item">
+                        <img
+                                src="https://mdbootstrap.com/img/new/slides/043.jpg"
+                                class="d-block w-100"
+                                style="height: 100vh"
+                                alt="..."
+                        />
+                    </div>
+                </div>
+                <button
+                        class="carousel-control-prev"
+                        data-mdb-target="#carouselExampleInterval"
+                        type="button"
+                        data-mdb-slide="prev"
+                >
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button
+                        class="carousel-control-next"
+                        data-mdb-target="#carouselExampleInterval"
+                        type="button"
+                        data-mdb-slide="next"
+                >
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </div>
+
+        <!--Descripción del producto-->
+
+        <div class="col-xxl-3 col-lg-4 col-md-12 col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    <h2>{{ producto.nombre }}</h2>
+                    <h4>{{ (producto.precio/100)|number_format(2,',', '.') ~ ' ' ~ '€' }}</h4>
+                    <small>
+                        {{ producto.getCreado|format_datetime('medium', 'short') }}
+                    </small>
+                    <p>{{ producto.descripcion|raw }}</p>
+                </div>
+            </div>
+        </div>
+    
+    </div>
+    
 {% endblock %}
