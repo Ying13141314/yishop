@@ -90,6 +90,11 @@ class Producto
      * @var DateTimeInterface
      */
     private DateTimeInterface $actualizado;
+
+    /**
+     * @ORM\OneToMany(targetEntity=CategoriasProductos::class, mappedBy="producto", orphanRemoval=true)
+     */
+    private $relacion;
     
 
     public function __construct()
@@ -97,6 +102,7 @@ class Producto
         $this->imagenes = new ArrayCollection();
         $this->setCreado(new DateTime());
         $this->setActualizado(new DateTime());
+        $this->relacion = new ArrayCollection();
     }
 
     public function getId()
@@ -237,6 +243,36 @@ class Producto
             if ($imagen->getProducto() === $this) {
                 $imagen->setProducto(null);
                 $imagen->eliminarImagen();
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|CategoriasProductos[]
+     */
+    public function getRelacion(): Collection
+    {
+        return $this->relacion;
+    }
+
+    public function addRelacion(CategoriasProductos $relacion): self
+    {
+        if (!$this->relacion->contains($relacion)) {
+            $this->relacion[] = $relacion;
+            $relacion->setProducto($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRelacion(CategoriasProductos $relacion): self
+    {
+        if ($this->relacion->removeElement($relacion)) {
+            // set the owning side to null (unless already changed)
+            if ($relacion->getProducto() === $this) {
+                $relacion->setProducto(null);
             }
         }
 
