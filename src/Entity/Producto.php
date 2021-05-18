@@ -94,15 +94,16 @@ class Producto
     /**
      * @ORM\OneToMany(targetEntity=CategoriasProductos::class, mappedBy="producto", orphanRemoval=true)
      */
-    private $relacion;
-    
+    private $categorias;
+
+    private $categoriasIds;
 
     public function __construct()
     {
         $this->imagenes = new ArrayCollection();
         $this->setCreado(new DateTime());
         $this->setActualizado(new DateTime());
-        $this->relacion = new ArrayCollection();
+        $this->categorias = new ArrayCollection();
     }
 
     public function getId()
@@ -252,24 +253,24 @@ class Producto
     /**
      * @return Collection|CategoriasProductos[]
      */
-    public function getRelacion(): Collection
+    public function getCategorias(): Collection
     {
-        return $this->relacion;
+        return $this->categorias;
     }
 
-    public function addRelacion(CategoriasProductos $relacion): self
+    public function addCategoria(CategoriasProductos $relacion): self
     {
-        if (!$this->relacion->contains($relacion)) {
-            $this->relacion[] = $relacion;
+        if (!$this->categorias->contains($relacion)) {
+            $this->categorias[] = $relacion;
             $relacion->setProducto($this);
         }
 
         return $this;
     }
 
-    public function removeRelacion(CategoriasProductos $relacion): self
+    public function removeCategoria(CategoriasProductos $relacion): self
     {
-        if ($this->relacion->removeElement($relacion)) {
+        if ($this->categorias->removeElement($relacion)) {
             // set the owning side to null (unless already changed)
             if ($relacion->getProducto() === $this) {
                 $relacion->setProducto(null);
@@ -277,5 +278,34 @@ class Producto
         }
 
         return $this;
+    }
+
+    /**
+     * @param array $categoriasId
+     * @return Producto
+     */
+    public function setCategoriasIds(array $categoriasId)
+    {
+        $this->categoriasIds = $categoriasId;
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getCategoriasIds(): array
+    {
+        if (!empty($this->categoriasIds)) {
+            return $this->categoriasIds;
+        }
+
+        /**
+         * @var CategoriasProductos $categoriaRelacion
+         */
+        $categoriasIds = [];
+        foreach ($this->categorias as $categoriaRelacion) {
+            $categoriasIds[] =  $categoriaRelacion->getCategoria()->getId();
+        }
+        return $categoriasIds;
     }
 }

@@ -2,14 +2,18 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\ImagenesProducto;
+use App\Entity\Categoria;
 use App\Entity\Producto;
 use App\Form\ImagenType;
+use App\Repository\CategoriaRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Option\TextAlign;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
@@ -20,6 +24,13 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
 class ProductosCrudController extends AbstractCrudController
 {
+    private CategoriaRepository $categoriaRepository;
+
+    public function __construct(CategoriaRepository $categoriaRepository)
+    {
+        $this->categoriaRepository = $categoriaRepository;
+    }
+
     public static function getEntityFqcn(): string
     {
         return Producto::class;
@@ -53,27 +64,32 @@ class ProductosCrudController extends AbstractCrudController
                 ->setTextAlign(TextAlign::RIGHT)
                 ->setNumDecimals(2),
 
-            BooleanField::new('activo')
+            ChoiceField::new('categoriasIds')
+                ->setLabel('Categorías')
+                ->allowMultipleChoices()
+                ->setChoices($this->categoriaRepository->getChoices()),
+
+            BooleanField::new('activo') // estoy leyendo
         ];
-        
-        if ($pageName === CRUD::PAGE_DETAIL) { 
-            
+
+        if ($pageName === CRUD::PAGE_DETAIL) {
+
             // Para mostrar los ficheros en los detalles
             $campos[] = CollectionField::new('imagenes')
-                    ->setTemplatePath('admin/imagenes.html.twig')
-                    ->onlyOnDetail();
-            
+                ->setTemplatePath('admin/imagenes.html.twig')
+                ->onlyOnDetail();
+
         } elseif ($pageName === CRUD::PAGE_EDIT || $pageName === CRUD::PAGE_NEW) {
-            
+
             // Para subir ficheros múltiples en el formulario
             $campos[] = CollectionField::new('imagenes')
                 ->setEntryType(ImagenType::class)
                 ->setFormTypeOption('by_reference', false)
                 ->onlyOnForms();
-            
+
         }
-        
-        
+
+
         return $campos;
     }
 
@@ -98,4 +114,37 @@ class ProductosCrudController extends AbstractCrudController
     {
         return $actions->add(CRUD::PAGE_INDEX, 'detail');
     }
+
+    public function persistEntity(EntityManagerInterface $entityManager, $entityInstance): void
+    {
+        parent::persistEntity($entityManager, $entityInstance);
+
+        $this->insertCategorias($entityManager, $entityInstance);
+    }
+
+    public function updateEntity(EntityManagerInterface $entityManager, $entityInstance): void
+    {
+        $this->insertCategorias($entityManager, $entityInstance, true);
+        
+        parent::updateEntity($entityManager, $entityInstance);
+    }
+
+    private function insertCategorias(EntityManagerInterface $entityManager, $entityInstance, bool $actualizar = false)
+    {
+        $productoId = $entityInstance->getId();
+
+        if ($actualizar) {
+            $entityManager->getConnection()->executeQuery("DELETE FROM categorias_productos  WHERE producto_id = :productoId", [
+                'productoId' => $productoId,
+            ]);
+        }
+        
+        foreach ($entityInstance->getCategoriasIds() as $categoriasId) {
+            $entityManager->getConnection()->executeQuery("INSERT INTO categorias_productos VALUE (0, :categoriaId, :productoId)", [
+                'productoId' => $productoId,
+                'categoriaId' => $categoriasId
+            ]);
+        }
+    }
+
 }

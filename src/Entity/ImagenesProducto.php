@@ -32,7 +32,7 @@ class ImagenesProducto
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private string $ruta;
+    private ?string $ruta;
 
     /**
      * @Vich\UploadableField(mapping="product_images", fileNameProperty="ruta")
@@ -82,7 +82,7 @@ class ImagenesProducto
         return $this->ruta;
     }
 
-    public function setRuta(string $ruta)
+    public function setRuta(?string $ruta)
     {
         $this->ruta = $ruta;
         return $this;

@@ -24,7 +24,7 @@ class CategoriasProductos
     private $categoria;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Producto::class, inversedBy="relacion")
+     * @ORM\ManyToOne(targetEntity=Producto::class, inversedBy="categorias")
      * @ORM\JoinColumn(nullable=false)
      */
     private $producto;
@@ -56,5 +56,10 @@ class CategoriasProductos
         $this->producto = $producto;
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->categoria->name->toString();
     }
 }

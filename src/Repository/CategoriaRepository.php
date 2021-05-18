@@ -18,6 +18,18 @@ class CategoriaRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Categoria::class);
     }
+    
+    public function getChoices(): array
+    {
+        $lista = $this->createQueryBuilder('c', 'c.nombre')
+            ->getQuery()->getArrayResult();
+
+        foreach ($lista as $key => $item) {
+            $lista[$key] = $item['id'];
+        }
+        
+        return $lista;
+    }
 
     // /**
     //  * @return Categoria[] Returns an array of Categoria objects
