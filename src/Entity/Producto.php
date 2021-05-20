@@ -26,7 +26,7 @@ class Producto
     /**
      * @var string|null
      *
-     * @ORM\OneToMany(targetEntity="ImagenesProducto", mappedBy="producto", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="ImagenesProducto", mappedBy="producto", cascade={"persist"}, orphanRemoval=true)
      */
     private $imagenes;
 

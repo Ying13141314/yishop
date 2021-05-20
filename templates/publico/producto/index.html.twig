@@ -24,7 +24,7 @@
 
         <div class="row">
             {% for producto in productos %}
-                <div class="col-xxl-3 col-lg-4 col-md-6 col-sm-12">
+                <div class="col-xxl-3 col-lg-4 col-md-6 col-sm-12 mb-5">
                     <div class="card bg-image hover-overlay ripple h-100">
                             {% for imagen in producto.imagenes %}
                                 <img src="/img/productos/{{ imagen.ruta }}" class="card-img-top" alt="{{ producto.nombre }}" height="450"

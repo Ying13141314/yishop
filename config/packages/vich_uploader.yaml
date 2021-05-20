@@ -5,6 +5,7 @@ vich_uploader:
         product_images:
             uri_prefix: '/img/productos'
             upload_destination: '%kernel.project_dir%/public/img/productos'
+            namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
             
             # para eliminar los ficheros
             delete_on_update: true

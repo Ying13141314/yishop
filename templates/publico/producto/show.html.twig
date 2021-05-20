@@ -1,55 +1,86 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}producto Guestbook - {{ producto }}{% endblock %}
+{% block titulo %}{{ producto.nombre }} | Yishop{% endblock %}
+
+{% block css %}
+    <style>
+        img {
+            object-fit: contain;
+        }
+    </style>
+{% endblock %}
 
 {% block body %}
-    <div class="container-fluid">
-    <div class="row">
-        <div class="col-xxl-5 col-lg-4 col-md-12 col-sm-12">
-            <div id="carouselExampleInterval" class="carousel slide" data-mdb-ride="carousel">
-                <div class="carousel-inner">
-                    {% for imagen in producto.imagenes %}
-                    <div class="carousel-item {{ loop.first ? 'active' : '' }} " data-mdb-interval="7000">
-                        <img src="/img/productos/{{ imagen.ruta }}" class="card-img-top" alt="{{ producto.nombre }}" style="height: 100vh" />
+
+    <div class="container my-4">
+        <div class="row">
+            <!--Carrusel de imágenes-->
+            <div class="col-xxl-5 col-lg-4 col-md-12 col-sm-12">
+                <div id="carouselExampleInterval" class="carousel slide" data-mdb-ride="carousel">
+                    <div class="carousel-inner">
+                        {% for imagen in producto.imagenes %}
+                            <div class="carousel-item {{ loop.first ? 'active' : '' }} " data-mdb-interval="7000">
+                                <img src="/img/productos/{{ imagen.ruta }}" class="card-img-top"
+                                     alt="{{ producto.nombre }}"
+                                     style="height: calc(100vh - 105px)"/>
+                            </div>
+                        {% endfor %}
                     </div>
-                    {%  endfor %}
-                </div>
-                <button
-                        class="carousel-control-prev"
-                        data-mdb-target="#carouselExampleInterval"
-                        type="button"
-                        data-mdb-slide="prev"
-                >
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <button
-                        class="carousel-control-next"
-                        data-mdb-target="#carouselExampleInterval"
-                        type="button"
-                        data-mdb-slide="next"
-                >
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
-            </div>
-        </div>
-
-        <!--Descripción del producto-->
-
-        <div class="col-xxl-7 col-lg-8 col-md-12 col-sm-12 d-flex align-items-center">
-            <div class="card">
-                <div class="card-body">
-                    <h2>{{ producto.nombre }}</h2>
-                    <h4>{{ (producto.precio/100)|number_format(2,',', '.') ~ ' ' ~ '€' }}</h4>
-                    <small>
-                        {{ producto.getCreado|format_datetime('medium', 'short') }}
-                    </small>
-                    <p>{{ producto.descripcion|raw }}</p>
+                    <button
+                            class="carousel-control-prev"
+                            data-mdb-target="#carouselExampleInterval"
+                            type="button"
+                            data-mdb-slide="prev"
+                    >
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button
+                            class="carousel-control-next"
+                            data-mdb-target="#carouselExampleInterval"
+                            type="button"
+                            data-mdb-slide="next"
+                    >
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
                 </div>
             </div>
+
+            <!--Descripción del producto-->
+            <div class="col-xxl-7 col-lg-8 col-md-12 col-sm-12 d-flex align-items-center">
+                <div class="w-100 ">
+                    <div class="card-body">
+                        <h2>{{ producto.nombre }}</h2>
+                        <h4>{{ (producto.precio/100)|number_format(2,',', '.') ~ ' ' ~ '€' }}</h4>
+                        <small>
+                            {{ producto.getCreado|format_datetime('medium', 'short') }}
+                            <hr/>
+                        </small>
+
+                        <h6><b>Talla:</b></h6>
+                        <div class="row">
+                            <div class="col-6 d-flex justify-content-between">
+                                <button type="button" class="btn btn-light btn-rounded">XL</button>
+                                <button type="button" class="btn btn-light btn-rounded">L</button>
+                                <button type="button" class="btn btn-light btn-rounded">M</button>
+                                <button type="button" class="btn btn-light btn-rounded">S</button>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-6">
+                                <button style="margin-top: 20px; margin-bottom: 20px" type="button"
+                                        class="btn btn-dark btn-block">Añadir a mi cesta
+                                </button>
+                            </div>
+                        </div>
+                        <p>{{ producto.descripcion|raw }}</p>
+
+                    </div>
+                </div>
+            </div>
         </div>
-    
     </div>
-    
+
 {% endblock %}

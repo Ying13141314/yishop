@@ -35,7 +35,7 @@ class ImagenesProducto
     private ?string $ruta;
 
     /**
-     * @Vich\UploadableField(mapping="product_images", fileNameProperty="ruta")
+     * @Vich\UploadableField(mapping="product_images", fileNameProperty="ruta", originalName="nombreOriginal")
      * @var File|null
      */
     private ?File $imagen = null;
@@ -51,6 +51,11 @@ class ImagenesProducto
      * @var DateTimeInterface
      */
     private DateTimeInterface $actualizado;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $nombreOriginal;
 
     public function __construct() {
         $this->setCreado(new DateTime());
@@ -134,5 +139,17 @@ class ImagenesProducto
     public function __toString()
     {
         return $this->ruta;
+    }
+
+    public function getNombreOriginal(): ?string
+    {
+        return $this->nombreOriginal;
+    }
+
+    public function setNombreOriginal(?string $nombreOriginal): self
+    {
+        $this->nombreOriginal = $nombreOriginal;
+
+        return $this;
     }
 }
