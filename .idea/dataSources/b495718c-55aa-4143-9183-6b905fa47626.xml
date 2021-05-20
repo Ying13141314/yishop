@@ -1090,214 +1090,219 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
       <NotNull>1</NotNull>
       <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
     </column>
-    <index id="294" parent="243" name="IDX_7852D3337645698E">
+    <column id="294" parent="243" name="nombre_original">
+      <Position>6</Position>
+      <DataType>varchar(255)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="295" parent="243" name="IDX_7852D3337645698E">
       <ColNames>producto_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="295" parent="243" name="PRIMARY">
+    <key id="296" parent="243" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="296" parent="243" name="FK_7852D3337645698E">
+    <foreign-key id="297" parent="243" name="FK_7852D3337645698E">
       <ColNames>producto_id</ColNames>
       <RefTableName>productos</RefTableName>
       <RefColNames>id</RefColNames>
     </foreign-key>
-    <column id="297" parent="244" name="id">
+    <column id="298" parent="244" name="id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="298" parent="244" name="fecha">
+    <column id="299" parent="244" name="fecha">
       <Position>2</Position>
       <DataType>datetime|0s</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
     </column>
-    <column id="299" parent="244" name="estado">
+    <column id="300" parent="244" name="estado">
       <Position>3</Position>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="300" parent="244" name="direccion">
+    <column id="301" parent="244" name="direccion">
       <Position>4</Position>
       <DataType>varchar(200)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="301" parent="244" name="codigo_postal">
+    <column id="302" parent="244" name="codigo_postal">
       <Position>5</Position>
       <DataType>varchar(10)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="302" parent="244" name="idCliente">
+    <column id="303" parent="244" name="idCliente">
       <Position>6</Position>
       <DataType>int(11)|0s</DataType>
     </column>
-    <index id="303" parent="244" name="FK_pedidos_clientes">
+    <index id="304" parent="244" name="FK_pedidos_clientes">
       <ColNames>idCliente</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="304" parent="244" name="PRIMARY">
+    <key id="305" parent="244" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="305" parent="244" name="FK_6716CCAAE4A5F0D7">
+    <foreign-key id="306" parent="244" name="FK_6716CCAAE4A5F0D7">
       <ColNames>idCliente</ColNames>
       <RefTableName>clientes</RefTableName>
       <RefColNames>id</RefColNames>
     </foreign-key>
-    <column id="306" parent="245" name="id">
+    <column id="307" parent="245" name="id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="307" parent="245" name="url">
+    <column id="308" parent="245" name="url">
       <Position>2</Position>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="308" parent="245" name="nombre">
+    <column id="309" parent="245" name="nombre">
       <Position>3</Position>
       <DataType>varchar(50)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="309" parent="245" name="descripcion">
+    <column id="310" parent="245" name="descripcion">
       <Position>4</Position>
       <DataType>text|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="310" parent="245" name="precio">
+    <column id="311" parent="245" name="precio">
       <Position>5</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="311" parent="245" name="peso">
+    <column id="312" parent="245" name="peso">
       <Position>6</Position>
       <DataType>int(11)|0s</DataType>
     </column>
-    <column id="312" parent="245" name="cantidad">
+    <column id="313" parent="245" name="cantidad">
       <Position>7</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="313" parent="245" name="activo">
+    <column id="314" parent="245" name="activo">
       <Position>8</Position>
       <DataType>tinyint(1)|0s</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>1</DefaultExpression>
     </column>
-    <column id="314" parent="245" name="creado">
+    <column id="315" parent="245" name="creado">
       <Position>9</Position>
       <DataType>datetime|0s</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
     </column>
-    <column id="315" parent="245" name="actualizado">
+    <column id="316" parent="245" name="actualizado">
       <Position>10</Position>
       <DataType>datetime|0s</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
     </column>
-    <index id="316" parent="245" name="url">
+    <index id="317" parent="245" name="url">
       <ColNames>url</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <key id="317" parent="245" name="PRIMARY">
+    <key id="318" parent="245" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="318" parent="245" name="url">
+    <key id="319" parent="245" name="url">
       <ColNames>url</ColNames>
       <UnderlyingIndexName>url</UnderlyingIndexName>
     </key>
-    <column id="319" parent="246" name="id">
+    <column id="320" parent="246" name="id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="320" parent="246" name="usuario">
+    <column id="321" parent="246" name="usuario">
       <Position>2</Position>
       <DataType>varchar(180)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="321" parent="246" name="roles">
+    <column id="322" parent="246" name="roles">
       <Position>3</Position>
       <DataType>json|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="322" parent="246" name="password">
+    <column id="323" parent="246" name="password">
       <Position>4</Position>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="323" parent="246" name="email">
+    <column id="324" parent="246" name="email">
       <Position>5</Position>
       <DataType>varchar(200)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="324" parent="246" name="dni">
+    <column id="325" parent="246" name="dni">
       <Position>6</Position>
       <DataType>varchar(15)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="325" parent="246" name="activo">
+    <column id="326" parent="246" name="activo">
       <Position>7</Position>
       <DataType>tinyint(1)|0s</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>1</DefaultExpression>
     </column>
-    <column id="326" parent="246" name="nombre">
+    <column id="327" parent="246" name="nombre">
       <Position>8</Position>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="327" parent="246" name="apellidos">
+    <column id="328" parent="246" name="apellidos">
       <Position>9</Position>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="328" parent="246" name="creado">
+    <column id="329" parent="246" name="creado">
       <Position>10</Position>
       <DataType>datetime|0s</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
     </column>
-    <index id="329" parent="246" name="UNIQ_EF687F22265B05D">
+    <index id="330" parent="246" name="UNIQ_EF687F22265B05D">
       <ColNames>usuario</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <index id="330" parent="246" name="UNIQ_EF687F2E7927C74">
+    <index id="331" parent="246" name="UNIQ_EF687F2E7927C74">
       <ColNames>email</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <index id="331" parent="246" name="UNIQ_EF687F27F8F253B">
+    <index id="332" parent="246" name="UNIQ_EF687F27F8F253B">
       <ColNames>dni</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <key id="332" parent="246" name="PRIMARY">
+    <key id="333" parent="246" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="333" parent="246" name="UNIQ_EF687F22265B05D">
+    <key id="334" parent="246" name="UNIQ_EF687F22265B05D">
       <ColNames>usuario</ColNames>
       <UnderlyingIndexName>UNIQ_EF687F22265B05D</UnderlyingIndexName>
     </key>
-    <key id="334" parent="246" name="UNIQ_EF687F2E7927C74">
+    <key id="335" parent="246" name="UNIQ_EF687F2E7927C74">
       <ColNames>email</ColNames>
       <UnderlyingIndexName>UNIQ_EF687F2E7927C74</UnderlyingIndexName>
     </key>
-    <key id="335" parent="246" name="UNIQ_EF687F27F8F253B">
+    <key id="336" parent="246" name="UNIQ_EF687F27F8F253B">
       <ColNames>dni</ColNames>
       <UnderlyingIndexName>UNIQ_EF687F27F8F253B</UnderlyingIndexName>
     </key>

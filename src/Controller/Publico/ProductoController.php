@@ -25,14 +25,27 @@ class ProductoController extends AbstractController
         ]));
     }
 
+
+    /**
+     * @Route("/categoria/{tipo}", name="productos_tipos",methods={"GET"})
+     */
+    public function show(string $tipo, ProductoRepository $productoRepository): Response
+    {
+        return new Response($this->renderView('Publico/producto/tipoProducto.html.twig', [
+            'productos' => $productoRepository->findByCategory($tipo),
+            'tipo' => $tipo
+        ]));
+    }
+    
     /**
      * @Route("/{url}", name="producto",methods={"GET"})
      * @ParamConverter("producto", options={"mapping": {"url": "url"}})
      */
-    public function show(Environment $twig, Producto $producto): Response
+    public function producto(Environment $twig, Producto $producto): Response
     {
         return new Response($twig->render('Publico/producto/show.html.twig', [
             'producto' => $producto,
         ]));
     }
+
 }

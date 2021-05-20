@@ -19,4 +19,14 @@ class ProductoRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Producto::class);
     }
+    
+    public function findByCategory($value)
+    {
+        return $this->createQueryBuilder('producto')
+            ->leftJoin('producto.categorias', 'prod_cat')
+            ->leftJoin('prod_cat.categoria', 'cat')
+            ->where('cat.nombre = :value')
+            ->setParameter('value', $value)
+            ->getQuery()->execute();
+    }
 }
