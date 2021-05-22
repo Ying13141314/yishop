@@ -35,77 +35,80 @@
 </head>
 
 <body>
-<!-- Just an image -->
-<!-- Navbar-->
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container-fluid justify-content-between">
-        <!-- Left elements -->
-        <div class="d-flex">
-            <!-- Brand -->
-            <a class="navbar-brand me-2 mb-1 d-flex align-items-center" href="/">
-                <img
-                        src="{{ asset('img/logo.png') }}"
-                        height="45"
-                        alt=""
-                        loading="lazy"
-                        style="margin-top: 2px;"
-                />
-            </a>
-        </div>
-        <!-- Left elements -->
 
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
+<!-- Navbar-->
+<header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid justify-content-between">
+            <!-- Left elements -->
+            <div class="d-flex">
+                <!-- Brand -->
+                <a class="navbar-brand me-2 mb-1 d-flex align-items-center" href="/">
+                    <img
+                            src="{{ asset('img/logo.png') }}"
+                            height="45"
+                            alt=""
+                            loading="lazy"
+                            style="margin-top: 2px;"
+                    />
+                </a>
+            </div>
+            <!-- Left elements -->
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/productos/categoria/todos">Todos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/productos/categoria/mujer">Mujer</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/productos/categoria/hombre">Hombres</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/productos/categoria/niños">Niños</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/productos/categoria/accesorios">Accesorios</a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Right elements -->
+            <ul class="navbar-nav flex-row">
+                <!-- Search form -->
+                <form class="input-group w-auto my-auto d-none d-sm-flex">
+                    <input
+                            autocomplete="off"
+                            type="search"
+                            class="form-control rounded"
+                            placeholder="Búsqueda"
+                            style="min-width: 125px;"
+                    />
+                    <span class="input-group-text border-0 d-none d-lg-flex"
+                    ><i class="fas fa-search"></i
+                        ></span>
+                </form>
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/productos">Todos</a>
+                    <a class="nav-link" href="#">
+                        <span class="badge badge-pill bg-danger" hidden="true">1</span>
+                        <span><i class="fas fa-shopping-cart"></i></span>
+                    </a>
                 </li>
+
                 <li class="nav-item">
-                    <a class="nav-link" href="/productos/categoria/mujer">Mujer</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/productos/categoria/hombre">Hombres</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/productos/categoria/niños">Niños</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/productos/categoria/accesorios">Accesorios</a>
+                    <a class="nav-link" href="/userlogin">
+                        <span><i class="fas fa-user"></i></span>
+                    </a>
                 </li>
             </ul>
+            <!-- Right elements -->
         </div>
-        
-        <!-- Right elements -->
-        <ul class="navbar-nav flex-row">
-            <!-- Search form -->
-            <form class="input-group w-auto my-auto d-none d-sm-flex">
-                <input
-                        autocomplete="off"
-                        type="search"
-                        class="form-control rounded"
-                        placeholder="Búsqueda"
-                        style="min-width: 125px;"
-                />
-                <span class="input-group-text border-0 d-none d-lg-flex"
-                ><i class="fas fa-search"></i
-                    ></span>
-            </form>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <span class="badge badge-pill bg-danger" hidden="true">1</span>
-                    <span><i class="fas fa-shopping-cart"></i></span>
-                </a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" href="/userlogin">
-                    <span><i class="fas fa-user"></i></span>
-                </a>
-            </li>
-        </ul>
-        <!-- Right elements -->
-    </div>
-</nav>
+    </nav>
+</header>
 <!-- Navbar -->
+
 {% block body %}{% endblock %}
 
 <footer class="bg-light text-center text-white">

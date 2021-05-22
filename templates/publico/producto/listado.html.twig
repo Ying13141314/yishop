@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block titulo %}Productos - {{ tipo|capitalize }}{% endblock %}
+
+{% block body %}
+    <div class="container-fluid mt-2">
+        <h6 class="my-4 text-center">Categoría - {{ tipo|capitalize }} / ({{ productos|length }} artículos)</h6>
+
+        <div class="row mt-2">
+            {% for producto in productos %}
+                <div class="col-xxl-3 col-lg-4 col-md-6 col-sm-12">
+                    <div class="card bg-image hover-overlay ripple h-100">
+                        {% for imagen in producto.imagenes %}
+                        <img src="/img/productos/{{ imagen.ruta }}" class="card-img-top" alt="{{ producto.nombre }}"
+                             height="450"
+                                {% endfor %}
+                        />
+                        <a href="/productos/{{ producto.url }}">
+                            <div class="mask" style="background-color: rgba(251, 251, 251, 0.15)"></div>
+                        </a>
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                {{ producto.nombre }}
+                            </h5>
+                            <p class="card-text">
+                                {{ (producto.precio/100)|number_format(2,',', '.') ~ ' ' ~ '€' }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="row mt-4">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center mb-4">
+                    {% if previous >= 0 %}
+                        <li class="page-item">
+                            <a class="page-link" href="{{ path('productos.listado', {tipo: tipo, offset: 0 }) }}"
+                               aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+
+                        <li class="page-item">
+                            <a class="page-link" href="{{ path('productos.listado', {tipo: tipo, offset: previous }) }}">
+                                {{ actualPage - 1 }}
+                            </a>
+                        </li>
+                    {% endif %}
+
+                    <li class="page-item active"><a class="page-link" href="#">{{ actualPage }}</a></li>
+
+                    {% if next < productos|length %}
+                        <li class="page-item">
+                            <a class="page-link" href="{{ path('productos.listado', {tipo: tipo, offset: next }) }}">
+                                {{ actualPage + 1 }}
+                            </a>
+                        </li>
+
+                        <li class="page-item">
+                            <a class="page-link" href="{{ path('productos.listado', {tipo: tipo, offset: max }) }}"
+                               aria-label="Previous">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+
+    </div>
+{% endblock %}

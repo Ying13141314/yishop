@@ -6,9 +6,9 @@ use App\Entity\Producto;
 use App\Repository\ProductoRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Twig\Environment;
 
 /**
  * @Route("/productos")
@@ -16,34 +16,33 @@ use Twig\Environment;
 class ProductoController extends AbstractController
 {
     /**
-     * @Route("/", name="productos",methods={"GET"})
+     * @Route("/categoria/{tipo}", name="productos.listado",methods={"GET"})
      */
-    public function index(Environment $twig, ProductoRepository $ProductoRepository): Response
+    public function listado(Request $request,string $tipo, ProductoRepository $productoRepository): Response
     {
-        return new Response($twig->render('Publico/producto/index.html.twig', [
-            'productos' => $ProductoRepository->findAll(),
-        ]));
-    }
-
-
-    /**
-     * @Route("/categoria/{tipo}", name="productos_tipos",methods={"GET"})
-     */
-    public function show(string $tipo, ProductoRepository $productoRepository): Response
-    {
-        return new Response($this->renderView('Publico/producto/tipoProducto.html.twig', [
-            'productos' => $productoRepository->findByCategory($tipo),
-            'tipo' => $tipo
+        $offset = max(0, $request->query->getInt('offset', 0));
+        $paginator = $tipo === 'todos' ? $productoRepository->findAllAndPaginate($offset) : $productoRepository->findByCategory($tipo, $offset);
+        
+        $next = min(count($paginator), $offset + ProductoRepository::PAGINATOR_PER_PAGE);
+        $maybeMax = ceil(count($paginator) / ProductoRepository::PAGINATOR_PER_PAGE + 1 );
+        
+        return new Response($this->renderView('/publico/producto/listado.html.twig', [
+            'productos' => $paginator,
+            'tipo' => $tipo,
+            'previous' => $offset - ProductoRepository::PAGINATOR_PER_PAGE,
+            'next' => $next,
+            'actualPage' => ceil($offset / ProductoRepository::PAGINATOR_PER_PAGE + 1),
+            'max' => max($next, $maybeMax)
         ]));
     }
     
     /**
-     * @Route("/{url}", name="producto",methods={"GET"})
+     * @Route("/{url}", name="productos.detalles",methods={"GET"})
      * @ParamConverter("producto", options={"mapping": {"url": "url"}})
      */
-    public function producto(Environment $twig, Producto $producto): Response
+    public function detalles(Producto $producto): Response
     {
-        return new Response($twig->render('Publico/producto/show.html.twig', [
+        return new Response($this->renderView('/publico/producto/detalles.html.twig', [
             'producto' => $producto,
         ]));
     }
