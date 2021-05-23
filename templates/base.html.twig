@@ -78,7 +78,7 @@
             <!-- Right elements -->
             <ul class="navbar-nav flex-row">
                 <!-- Search form -->
-                <form method="get" action="/productos/categoria/todos" class="input-group w-auto my-auto d-none d-sm-flex">
+                <form method="get" action="{{ path('productos.listado', {tipo: 'todos' }) }}" class="input-group w-auto my-auto d-none d-sm-flex">
                     <input autocomplete="off"
                            type="search"
                            class="form-control rounded"
