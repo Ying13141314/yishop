@@ -26,7 +26,7 @@ class ProductoController extends AbstractController
         $paginator = $productoRepository->getAll($offset, $tipo, $search);
         
         $next = min(count($paginator), $offset + ProductoRepository::PAGINATOR_PER_PAGE);
-        $maybeMax = ceil(count($paginator) / ProductoRepository::PAGINATOR_PER_PAGE + 1 );
+        $candidatoOffsetFinal = ceil(count($paginator) / ProductoRepository::PAGINATOR_PER_PAGE + 1 );
         
         return new Response($this->renderView('/publico/producto/listado.html.twig', [
             'productos' => $paginator,
@@ -34,7 +34,7 @@ class ProductoController extends AbstractController
             'previous' => $offset - ProductoRepository::PAGINATOR_PER_PAGE,
             'next' => $next,
             'actualPage' => ceil($offset / ProductoRepository::PAGINATOR_PER_PAGE + 1),
-            'max' => max($next, $maybeMax),
+            'offsetFinal' => max($next, $candidatoOffsetFinal),
             'search' => $search
         ]));
     }
