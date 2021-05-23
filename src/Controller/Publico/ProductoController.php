@@ -20,8 +20,10 @@ class ProductoController extends AbstractController
      */
     public function listado(Request $request,string $tipo, ProductoRepository $productoRepository): Response
     {
-        $offset = max(0, $request->query->getInt('offset', 0));
-        $paginator = $tipo === 'todos' ? $productoRepository->findAllAndPaginate($offset) : $productoRepository->findByCategory($tipo, $offset);
+        $offset = max(0, $request->query->getInt('offset'));
+        $search = $request->query->get('search', '');
+        
+        $paginator = $productoRepository->getAll($offset, $tipo, $search);
         
         $next = min(count($paginator), $offset + ProductoRepository::PAGINATOR_PER_PAGE);
         $maybeMax = ceil(count($paginator) / ProductoRepository::PAGINATOR_PER_PAGE + 1 );
@@ -32,7 +34,8 @@ class ProductoController extends AbstractController
             'previous' => $offset - ProductoRepository::PAGINATOR_PER_PAGE,
             'next' => $next,
             'actualPage' => ceil($offset / ProductoRepository::PAGINATOR_PER_PAGE + 1),
-            'max' => max($next, $maybeMax)
+            'max' => max($next, $maybeMax),
+            'search' => $search
         ]));
     }
     

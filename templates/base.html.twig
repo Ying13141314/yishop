@@ -78,17 +78,16 @@
             <!-- Right elements -->
             <ul class="navbar-nav flex-row">
                 <!-- Search form -->
-                <form class="input-group w-auto my-auto d-none d-sm-flex">
-                    <input
-                            autocomplete="off"
-                            type="search"
-                            class="form-control rounded"
-                            placeholder="Búsqueda"
-                            style="min-width: 125px;"
+                <form method="get" action="/productos/categoria/todos" class="input-group w-auto my-auto d-none d-sm-flex">
+                    <input autocomplete="off"
+                           type="search"
+                           class="form-control rounded"
+                           placeholder="Búsqueda"
+                           style="min-width: 125px;"
+                           name="search"
+                           value="{{ search|default('') }}"
                     />
-                    <span class="input-group-text border-0 d-none d-lg-flex"
-                    ><i class="fas fa-search"></i
-                        ></span>
+                    <button type="submit" class="input-group-text border-0 d-none d-lg-flex"><i class="fas fa-search"></i></button>
                 </form>
                 <li class="nav-item">
                     <a class="nav-link" href="#">
@@ -98,7 +97,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="/userlogin">
+                    <a class="nav-link" href="/login/clinte">
                         <span><i class="fas fa-user"></i></span>
                     </a>
                 </li>
