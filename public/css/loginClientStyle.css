@@ -3,12 +3,6 @@
     --input-padding-y: 0.75rem;
 }
 
-.login,
-.image {
-    min-height: calc(100vh - 205px);
-}
-
-
 .login-heading {
     font-weight: 300;
 }
