@@ -75,10 +75,10 @@
                 </ul>
             </div>
 
-            <!-- Right elements -->
-            <ul class="navbar-nav flex-row">
+            <!-- Center elements -->
+            <ul class="navbar-nav flex-row d-none d-md-flex">
                 <!-- Search form -->
-                <form method="get" action="{{ path('productos.listado', {tipo: 'todos' }) }}" class="input-group w-auto my-auto d-none d-sm-flex">
+                <form method="get" action="{{ path('productos.listado', {tipo: 'todos' }) }}" class="input-group w-auto my-auto">
                     <input autocomplete="off"
                            type="search"
                            class="form-control rounded"
@@ -89,8 +89,13 @@
                     />
                     <button type="submit" class="input-group-text border-0 d-none d-lg-flex"><i class="fas fa-search"></i></button>
                 </form>
+            </ul>
+            <!-- Center elements -->
+            
+            <!-- Right elements -->
+            <ul class="navbar-nav flex-row">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">
+                    <a class="nav-link" href="/carrito/compra">
                         <span class="badge badge-pill bg-danger" hidden="true">1</span>
                         <span><i class="fas fa-shopping-cart"></i></span>
                     </a>
