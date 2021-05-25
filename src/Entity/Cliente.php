@@ -3,12 +3,15 @@
 namespace App\Entity;
 
 use App\Repository\ClienteRepository;
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Table(name="clientes")
  * @ORM\Entity(repositoryClass=ClienteRepository::class)
+ * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
  */
 class Cliente implements UserInterface
 {
@@ -72,8 +75,14 @@ class Cliente implements UserInterface
 
     /**
      * @ORM\Column(type="datetime", options={"default": "CURRENT_TIMESTAMP"})
+     * @var DateTimeInterface
      */
-    private $creado;
+    private DateTimeInterface $creado;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isVerified = false;
 
     public function getId(): ?int
     {
@@ -248,6 +257,18 @@ class Cliente implements UserInterface
     public function setCreado(\DateTimeInterface $creado): self
     {
         $this->creado = $creado;
+
+        return $this;
+    }
+
+    public function isVerified(): bool
+    {
+        return $this->isVerified;
+    }
+
+    public function setIsVerified(bool $isVerified): self
+    {
+        $this->isVerified = $isVerified;
 
         return $this;
     }

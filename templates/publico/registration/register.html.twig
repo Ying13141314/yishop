@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block css %}<link rel="stylesheet" href="{{ asset('css/registroStyle.css') }}"/>{% endblock %}
+
+{% block body %}
+    <div class="container principal">
+        <div class="wrapper d-flex justify-content-center flex-column px-md-5 px-1">
+            {% for flashError in app.flashes('verify_email_error') %}
+                <div class="alert alert-danger" role="alert">{{ flashError }}</div>
+            {% endfor %}
+            <div class="h3 text-center font-weight-bold">DATOS PERSONALES</div>
+            {{ form_start(registrationForm) }}
+            <div class="row my-md-4">
+                <div class="col-md-6">
+                    {{ form_row(registrationForm.email) }}
+                </div>
+                <div class="col-md-6 pt-md-0 pt-4">
+                    {{ form_row(registrationForm.plainPassword, {
+                        label: 'Password'
+                    }) }}
+                </div>
+            </div>
+            <div class="row my-4 my-2">
+                <div class="col-md-6">
+                    {{ form_row(registrationForm.nombre) }}
+                </div>
+                <div class="col-md-6 pt-md-0 pt-4">
+                    {{ form_row(registrationForm.apellidos) }}
+                </div>
+            </div>
+
+            <div class="row my-4 my-2">
+                <div class="col-md-6">
+                    {{ form_row(registrationForm.telefono) }}
+                </div>
+                <div class="col-md-6 pt-md-0 pt-4">
+                    {{ form_row(registrationForm.nacionalidad) }}
+                </div>
+            </div>
+
+            <div class="row my-4 my-2">
+                <div class="col-md-6">
+                    {{ form_row(registrationForm.direccion) }}
+                </div>
+                <div class="col-md-6 pt-md-0 pt-4">
+                    {{ form_row(registrationForm.codigo_postal) }}
+                </div>
+            </div>
+            <div class="d-lg-flex justify-content-between align-items-center pb-4" required>
+                <div class="col-md-6">
+                    {{ form_row(registrationForm.dni) }}
+                </div>
+                <div class="size">
+                    {{ form_row(registrationForm.agreeTerms) }}
+                </div>
+            </div>
+            <div class="d-flex justify-content-end"> 
+                <button type="submit" class="btn">CREAR CUENTA</button> 
+            </div>
+        </div>
+        {{ form_end(registrationForm) }}
+    </div>
+{% endblock %}

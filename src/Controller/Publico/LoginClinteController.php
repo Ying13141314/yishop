@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class LoginClinteController extends AbstractController
 {
     /**
-     * @Route("/login/clinte", name="login_clinte")
+     * @Route("/login/cliente", name="login_clinte")
      */
     public function index(): Response
     {
