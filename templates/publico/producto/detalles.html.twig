@@ -61,17 +61,17 @@
                         <h6><b>Talla:</b></h6>
                         <div class="row">
                             <div class="col-6 d-flex justify-content-between">
-                                <button type="button" class="btn btn-light btn-rounded">XL</button>
-                                <button type="button" class="btn btn-light btn-rounded">L</button>
-                                <button type="button" class="btn btn-light btn-rounded">M</button>
-                                <button type="button" class="btn btn-light btn-rounded">S</button>
+                                <button type="button" class="btn btn-light btn-rounded tallaRopa" value="xl">XL</button>
+                                <button type="button" class="btn btn-light btn-rounded tallaRopa" value="l">L</button>
+                                <button type="button" class="btn btn-light btn-rounded tallaRopa" value="m">M</button>
+                                <button type="button" class="btn btn-light btn-rounded tallaRopa" value="s">S</button>
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="col-6">
-                                <button style="margin-top: 20px; margin-bottom: 20px" type="button"
-                                        class="btn btn-dark btn-block">Añadir a mi cesta
+                                <button style="margin-top: 20px; margin-bottom: 20px" type="button" data-id="{{ producto.id }}"
+                                        class="btn btn-dark btn-block add-producto">Añadir a mi cesta
                                 </button>
                             </div>
                         </div>

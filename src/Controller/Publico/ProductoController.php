@@ -43,8 +43,12 @@ class ProductoController extends AbstractController
      * @Route("/{url}", name="productos.detalles",methods={"GET"})
      * @ParamConverter("producto", options={"mapping": {"url": "url"}})
      */
-    public function detalles(Producto $producto): Response
+    public function detalles(Request $request, Producto $producto): Response
     {
+        if (!$request->getSession()->isStarted()) {
+            $request->getSession()->start();
+        }
+        
         return new Response($this->renderView('/publico/producto/detalles.html.twig', [
             'producto' => $producto,
         ]));

@@ -23,6 +23,7 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
+            pattern: /admin
             anonymous: false
             lazy: true
             provider: app_user_provider
@@ -30,6 +31,17 @@ security:
                 authenticators:
                     - App\Security\AdminPanelAuthenticator
             logout:
+                path: app_logout
+
+        cliente:
+              pattern: /cliente
+              anonymous: false
+              lazy: true
+              provider: app_cliente_provider
+              guard:
+                authenticators:
+                  - App\Security\AdminPanelAuthenticator
+              logout:
                 path: app_logout
                 # where to redirect after logout
                 # target: app_any_route
