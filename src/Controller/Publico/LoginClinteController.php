@@ -9,11 +9,11 @@ use Symfony\Component\Routing\Annotation\Route;
 class LoginClinteController extends AbstractController
 {
     /**
-     * @Route("/login/cliente", name="login_clinte")
+     * @Route("/login/cliente", name="login_cliente")
      */
     public function index(): Response
     {
-        return $this->render('publico/login_clinte/index.html.twig', [
+        return $this->render('publico/login_cliente/index.html.twig', [
             'controller_name' => 'LoginClinteController',
         ]);
     }

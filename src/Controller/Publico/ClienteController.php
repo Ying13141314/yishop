@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Publico;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,7 +13,7 @@ class ClienteController extends AbstractController
      */
     public function index(): Response
     {
-        return $this->render('cliente/index.html.twig', [
+        return $this->render('publico/cliente/index.html.twig', [
             'controller_name' => 'ClienteController',
         ]);
     }

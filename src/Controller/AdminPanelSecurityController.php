@@ -36,6 +36,6 @@ class AdminPanelSecurityController extends AbstractController
      */
     public function logout()
     {
-        return new RedirectResponse($this->urlGenerator->generate('admin.login'));
+        return new RedirectResponse($this->urlGenerator->generate('app_login'));
     }
 }
