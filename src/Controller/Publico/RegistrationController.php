@@ -46,12 +46,13 @@ class RegistrationController extends AbstractController
             $user->setRoles(['ROLE_USER']);
 
             $user->setCreado(new DateTime());
+            //$user->setIsVerified(true); // se verifica automaticamente
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
 
-            // generate a signed url and email it to the user
+//             generate a signed url and email it to the user
             $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
                 (new TemplatedEmail())
                     ->from(new Address('a_ying.lin@iespablopicasso.es', 'Ying Lin'))
@@ -79,7 +80,7 @@ class RegistrationController extends AbstractController
      */
     public function verifyUserEmail(Request $request): Response
     {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_ANONYMOUSLY');
 
         // validate email confirmation link, sets User::isVerified=true and persists
         try {
