@@ -16,33 +16,35 @@ security:
         app_user_provider:
             entity:
                 class: App\Entity\Usuario
-                property: usuario
+                property: email
         # used to reload user from session & other features (e.g. switch_user)
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
-            pattern: /admin
+            pattern: ^/admin
             anonymous: false
             lazy: true
             provider: app_user_provider
             guard:
                 authenticators:
                     - App\Security\AdminPanelAuthenticator
+                entry_point: App\Security\AdminPanelAuthenticator
             logout:
                 path: app_logout
 
         cliente:
-              pattern: /cliente
+              pattern: ^/cliente
               anonymous: false
               lazy: true
               provider: app_cliente_provider
               guard:
                 authenticators:
-                  - App\Security\AdminPanelAuthenticator
+                  - App\Security\PublicAuthenticator
+                entry_point: App\Security\PublicAuthenticator
               logout:
-                path: app_logout
+                path: app_logoutCliente
                 # where to redirect after logout
                 # target: app_any_route
 
@@ -55,5 +57,7 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
+        - { path: ^/admin/login, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin, roles: ROLE_ADMIN }
-        - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/cliente/login, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/cliente, roles: ROLE_USER }
