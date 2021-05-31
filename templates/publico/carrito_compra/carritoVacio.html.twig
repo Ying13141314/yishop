@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block titulo %}Pedido{% endblock %}
+
+{% block body %}
+    <div class="container mb-1" style="min-height:73vh">
+        <div class="row">
+            <div class="col-lg-6 col-md-12 col-sm-12 d-flex align-items-center">
+                <img src="https://png.pngtree.com/png-vector/20191018/ourlarge/pngtree-shopping-bag-icon-for-your-design-websites-and-projects-png-image_1830188.jpg"/>
+            </div>
+
+            <div class="col-lg-6 col-md-12 col-sm-12 d-flex align-items-center">
+                <div class="row text-center w-100 ml-5">
+                    <label><h3>TU CESTA ESTÁ VACÍA</h3></label>
+                    <div class="d-grid gap-2 col-6 mx-auto">
+                        <a class="btn btn-dark" href="/productos/categoria/todos" type="button"><h6>COMPRAR AHORA</h6></a>
+                    </div>
+                </div>
+                
+            </div>
+            
+        </div>
+    </div>
+{% endblock %}

@@ -25,14 +25,20 @@ class CarritoCompraController extends AbstractController
         $session = $request->getSession();
         
         $productoId = '';
-        foreach ($session->get('productos') as $id => $valor) {
-            $productoId = $id;
-        }
+        if($session->get('productos')==null){
+            return $this->render('publico/carrito_compra/carritoVacio.html.twig', [
+            ]);
+        }else{
+            foreach ($session->get('productos') as $id => $valor) {
+                $productoId = $id;
+            }
 
-        return $this->render('publico/carrito_compra/index.html.twig', [
-            'controller_name' => 'CarritoCompraController',
-            'productos' => $productoId
-        ]);
+            return $this->render('publico/carrito_compra/index.html.twig', [
+                'controller_name' => 'CarritoCompraController',
+                'productos' => $productoId
+            ]);
+        }
+        
     }
 
     /**

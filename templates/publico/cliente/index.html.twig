@@ -9,58 +9,64 @@
                 <div class="col-md-12">
                     <div class="mb-3">
                         <div class="card-body">
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <h6 class="mb-0">Nombre y Apellidos</h6>
+                            <form method="post" id="formData">
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Nombre</h6>
+                                    </div>
+                                    <input class="col-sm-3 text-secondary inputCliente inputNombre"
+                                           value="{{ app.user.nombre }}" readonly/>
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Apellidos</h6>
+                                    </div>
+                                    <input class="col-sm-3 text-secondary inputCliente inputApellidos"
+                                           value="{{ app.user.apellidos }}" readonly/>
                                 </div>
-                                <div class="col-sm-6 text-secondary">
-                                    Kenneth Valdez
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Email</h6>
+                                    </div>
+                                    <input class="col-sm-3 text-secondary inputCliente inputEmail" value="{{ app.user.email }}" readonly/>
+    
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Contraseña</h6>
+                                    </div>
+                                    <input type="password" class="col-sm-3 text-secondary inputCliente inputPassword" placeholder="Contraseña nueva" readonly/>
                                 </div>
-                                <div class="col-sm-3">
-                                    <a class="btn btn-info " target="__blank" href="https://www.bootdey.com/snippets/view/profile-edit-data-and-skills">Edit</a>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Teléfono</h6>
+                                    </div>
+                                    <input class="col-sm-3 text-secondary inputCliente inputTelefono" value="{{ app.user.telefono }}" readonly/>
+    
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">DNI</h6>
+                                    </div>
+                                    <input class="col-sm-3 text-secondary inputCliente inputDni" value="{{ app.user.dni }}" readonly/>
                                 </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <h6 class="mb-0">Email</h6>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Dirección</h6>
+                                    </div>
+                                    <input class="col-sm-3 text-secondary inputCliente inputDireccion" value="{{ app.user.direccion }}" readonly/>
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Código Postal</h6>
+                                    </div>
+                                    <input class="col-sm-3 text-secondary inputCliente inputCodigoPostal" value="{{ app.user.codigoPostal }}" readonly/>
                                 </div>
-                                <div class="col-sm-9 text-secondary">
-                                    fip@jukmuh.al
+                                <hr>
+    
+                                <div class="col-sm-6">
+                                    <a class="btn btn-info botonEditCliente" target="__blank">Editar</a>
                                 </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <h6 class="mb-0">Teléfono</h6>
+    
+                                <div class="col-sm-6">
+                                    <a class="btn btn-info botonGuardarCliente" target="__blank">Guardar</a>
                                 </div>
-                                <div class="col-sm-3 text-secondary">
-                                    (239) 816-9029
-                                </div>
-
-                                <div class="col-sm-3">
-                                    <h6 class="mb-0">DNI</h6>
-                                </div>
-                                <div class="col-sm-3 text-secondary">
-                                    (320) 380-453911111
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <h6 class="mb-0">Dirección</h6>
-                                </div>
-                                <div class="col-sm-3 text-secondary">
-                                    Bay Area, San Francisco, CA
-                                </div>
-                                <div class="col-sm-3">
-                                    <h6 class="mb-0">Código Postal</h6>
-                                </div>
-                                <div class="col-sm-3 text-secondary">
-                                    (320) 380-4539
-                                </div>
-                            </div>
-                            <hr>
+                            </form>
                         </div>
                     </div>
                     
@@ -110,4 +116,8 @@
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('js/cliente.js') }}" type="text/javascript"></script>
 {% endblock %}
