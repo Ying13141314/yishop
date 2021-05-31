@@ -6,6 +6,7 @@ use App\Entity\Categoria;
 use App\Entity\Producto;
 use App\Form\ImagenType;
 use App\Repository\CategoriaRepository;
+use App\Repository\TallaRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
@@ -25,10 +26,12 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 class ProductosCrudController extends AbstractCrudController
 {
     private CategoriaRepository $categoriaRepository;
+    private TallaRepository $tallaRepository;
 
-    public function __construct(CategoriaRepository $categoriaRepository)
+    public function __construct(CategoriaRepository $categoriaRepository, TallaRepository $tallaRepository)
     {
         $this->categoriaRepository = $categoriaRepository;
+        $this->tallaRepository = $tallaRepository;
     }
 
     public static function getEntityFqcn(): string
@@ -68,8 +71,14 @@ class ProductosCrudController extends AbstractCrudController
                 ->setLabel('Categorías')
                 ->allowMultipleChoices()
                 ->setChoices($this->categoriaRepository->getChoices()),
+            
+            ChoiceField::new('tallasIds')
+                ->setLabel('Tallas')
+                ->allowMultipleChoices()
+                ->setChoices($this->tallaRepository->getChoices()),
 
-            BooleanField::new('activo') // estoy leyendo
+            
+            BooleanField::new('activo')
         ];
 
         if ($pageName === CRUD::PAGE_DETAIL) {

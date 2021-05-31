@@ -97,6 +97,12 @@ class Producto
     private $categorias;
 
     private $categoriasIds;
+    
+    /**
+     * @ORM\OneToMany(targetEntity=TallasProductos::class, mappedBy="producto", orphanRemoval=true)
+     */
+    private $tallasProductos;
+    private $tallasIds;
 
     public function __construct()
     {
@@ -104,6 +110,7 @@ class Producto
         $this->setCreado(new DateTime());
         $this->setActualizado(new DateTime());
         $this->categorias = new ArrayCollection();
+        $this->tallasProductos = new ArrayCollection();
     }
 
     public function getId()
@@ -307,5 +314,62 @@ class Producto
             $categoriasIds[] =  $categoriaRelacion->getCategoria()->getId();
         }
         return $categoriasIds;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTallasIds()
+    {
+        if (!empty($this->tallasIds)) {
+            return $this->tallasIds;
+        }
+
+        /**
+         * @var tallasProductos $tallasProductos
+         */
+        $tallasIds = [];
+        foreach ($this->tallasProductos as $tallasProductos) {
+            $tallasIds[] =  $tallasProductos->getTalla()->getId();
+        }
+        return $tallasIds;
+    }
+
+    /**
+     * @param mixed $tallasIds
+     */
+    public function setTallasIds($tallasIds): void
+    {
+        $this->tallasIds = $tallasIds;
+    }
+
+    /**
+     * @return Collection|TallasProductos[]
+     */
+    public function getTallasProductos(): Collection
+    {
+        return $this->tallasProductos;
+    }
+
+    public function addTallasProducto(TallasProductos $tallasProducto): self
+    {
+        if (!$this->tallasProductos->contains($tallasProducto)) {
+            $this->tallasProductos[] = $tallasProducto;
+            $tallasProducto->setProducto($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTallasProducto(TallasProductos $tallasProducto): self
+    {
+        if ($this->tallasProductos->removeElement($tallasProducto)) {
+            // set the owning side to null (unless already changed)
+            if ($tallasProducto->getProducto() === $this) {
+                $tallasProducto->setProducto(null);
+            }
+        }
+
+        return $this;
     }
 }
