@@ -49,8 +49,11 @@
 
             <!--Descripción del producto-->
             <div class="col-xxl-7 col-lg-8 col-md-12 col-sm-12 d-flex align-items-center">
+                
                 <div class="w-100 ">
+                    
                     <div class="card-body">
+
                         <h2>{{ producto.nombre }}</h2>
                         <h4>{{ (producto.precio/100)|number_format(2,',', '.') ~ ' ' ~ '€' }}</h4>
                         <small>
@@ -59,25 +62,32 @@
                         </small>
 
                         {% if tiene_talla %}
-                        <h6><b>Talla:</b></h6>
-                        <div class="row">
-                            <div class="col-6 d-flex justify-content-between">
-                                <button type="button" class="btn btn-light btn-rounded tallaRopa" value="xl">XL</button>
-                                <button type="button" class="btn btn-light btn-rounded tallaRopa" value="l">L</button>
-                                <button type="button" class="btn btn-light btn-rounded tallaRopa" value="m">M</button>
-                                <button type="button" class="btn btn-light btn-rounded tallaRopa" value="s">S</button>
+                            <h6><b>Talla:</b></h6>
+                            <div class="row">
+                                <div class="col-6 d-flex justify-content-between">
+                                    <button type="button" class="btn btn-light btn-rounded tallaRopa" value="xl">XL
+                                    </button>
+                                    <button type="button" class="btn btn-light btn-rounded tallaRopa" value="l">L
+                                    </button>
+                                    <button type="button" class="btn btn-light btn-rounded tallaRopa" value="m">M
+                                    </button>
+                                    <button type="button" class="btn btn-light btn-rounded tallaRopa" value="s">S
+                                    </button>
+                                </div>
                             </div>
-                        </div>
                         {% endif %}
 
                         <div class="row">
                             <div class="col-6">
-                                <button style="margin-top: 20px; margin-bottom: 20px" type="button" data-id="{{ producto.id }}"
+                                <button style="margin-top: 20px; margin-bottom: 20px" type="button"
+                                        data-id="{{ producto.id }}"
                                         class="btn btn-dark btn-block add-producto">Añadir a mi cesta
                                 </button>
                             </div>
                         </div>
                         <p>{{ producto.descripcion|raw }}</p>
+
+                        <input type="hidden" id="con-talla" value="{{ tiene_talla }}">
 
                     </div>
                 </div>
