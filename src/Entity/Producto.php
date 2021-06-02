@@ -117,6 +117,15 @@ class Producto
      * @ORM\Column(type="integer", nullable=true)
      */
     private $s;
+    
+    
+    private $cantidades;
+
+    /**
+     * No se guarda en base de datos. Sirve para mostrar luego en el carrito
+     * @var int 
+     */
+    private $total;
 
     public function __construct()
     {
@@ -124,6 +133,19 @@ class Producto
         $this->setCreado(new DateTime());
         $this->setActualizado(new DateTime());
         $this->categorias = new ArrayCollection();
+    }
+
+
+    public function calcularTotal()
+    {
+        $this->total = 0;
+        foreach ($this->cantidades as $cantidad) {
+            $this->total += ($cantidad * $this->precio);
+        }
+        
+        // Las operaciones son en céntimos. Se divide entre 100 para que en el
+        // carrito salga en €
+        return $this->total / 100;
     }
 
     public function getId()
@@ -375,5 +397,30 @@ class Producto
         $this->s = $s;
 
         return $this;
+    }
+    
+    public function getCantidades() {
+        return $this->cantidades;
+    }
+
+    public function setCantidades($talla, $cantidad)
+    {
+        $this->cantidades[$talla] = $cantidad;
+    }
+
+    /**
+     * En base de datos se guarda en céntimos. Hay que dividir para obtener euros 
+     * @return int
+     */
+    public function getTotal() {
+        return $this->total / 100;
+    }
+
+    /**
+     * En base de datos se guarda en céntimos. Hay que dividir para obtener euros
+     * @return int
+     */
+    public function getPrecioEur() {
+        return $this->precio / 100;
     }
 }

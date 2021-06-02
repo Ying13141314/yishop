@@ -13,7 +13,7 @@ $(document).ready(() => {
         $.ajax({
             data: {
                 id: productoId,
-                cantidad: 10,
+                cantidad: 1,
                 talla: talla
             },
             dataType: 'JSON',

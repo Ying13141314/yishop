@@ -2,6 +2,7 @@
 
 namespace App\Controller\Publico;
 
+use App\Repository\ProductoRepository;
 use App\Services\CarritoService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -11,10 +12,12 @@ use Symfony\Component\Routing\Annotation\Route;
 class CarritoCompraController extends AbstractController
 {
     private CarritoService $carrito;
+    private ProductoRepository $productoRepository;
 
-    public function __construct(CarritoService $carrito)
+    public function __construct(CarritoService $carrito, ProductoRepository $productoRepository)
     {
         $this->carrito = $carrito;
+        $this->productoRepository = $productoRepository;
     }
 
     /**
@@ -23,22 +26,36 @@ class CarritoCompraController extends AbstractController
     public function index(Request $request): Response
     {
         $session = $request->getSession();
+
+        $carrito = $session->get('productos');
         
-        $productoId = '';
-        if($session->get('productos')==null){
-            return $this->render('publico/carrito_compra/carritoVacio.html.twig', [
-            ]);
-        }else{
-            foreach ($session->get('productos') as $id => $valor) {
-                $productoId = $id;
+        
+        if (!$carrito)
+            return $this->render('publico/carrito_compra/carritoVacio.html.twig');
+
+        $productos = [];
+        $subtotal = 0;
+
+        foreach ($carrito as $id => $cantidades) {
+
+            $producto = $this->productoRepository->find($id);
+
+            foreach ($cantidades as $talla => $cantidad) {
+
+                $producto->setCantidades($talla, $cantidad);
+
             }
 
-            return $this->render('publico/carrito_compra/index.html.twig', [
-                'controller_name' => 'CarritoCompraController',
-                'productos' => $productoId
-            ]);
+            $productos[] = $producto;
+            $subtotal += $producto->calcularTotal();
+
         }
-        
+
+        return $this->render('publico/carrito_compra/index.html.twig', [
+            'controller_name' => 'CarritoCompraController',
+            'productos' => $productos,
+            'subtotal' => $subtotal,
+        ]);
     }
 
     /**
@@ -50,12 +67,27 @@ class CarritoCompraController extends AbstractController
         $cantidad = $request->request->get('cantidad');
         $talla = $request->request->get('talla');
 
-        $producto[$id] = [
-            $talla => $cantidad
-        ];
-        
-        $request->getSession()->set('productos', $producto);
+        $session = $request->getSession();
 
-        return $this->json('ok');
+        $carrito = $session->get('productos');
+        
+        if ($carrito) {
+            
+            $cantidad_original = $carrito[$id][$talla] ?? 0;
+
+            $carrito[$id][$talla] = $cantidad + $cantidad_original;
+            
+        } else {
+            
+            $carrito[$id] = [
+                $talla => $cantidad
+            ];
+            
+        }
+        
+        $session->set('productos', $carrito);
+        
+
+        return $this->json($carrito);
     }
 }
