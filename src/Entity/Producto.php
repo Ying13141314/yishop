@@ -423,4 +423,15 @@ class Producto
     public function getPrecioEur() {
         return $this->precio / 100;
     }
+
+    public function tieneTalla(): bool
+    {
+        foreach ($this->categorias as $categoria) {
+           if ($categoria->getCategoria()->getConTalla()) {
+               return true;
+           }
+        }
+        
+        return false;
+    }
 }

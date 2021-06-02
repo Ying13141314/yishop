@@ -47,7 +47,12 @@
                                     <td>
                                         <div class="d-flex flex-column">
                                             {% for talla, cantidad in producto.getCantidades() %}
-                                                <div><b>{{ talla|upper }} :</b> <span>{{ cantidad }} ud.</span></div>
+                                                
+                                                {% if talla is empty %}
+                                                    <div><span>{{ cantidad }} ud.</span></div>
+                                                {% else %}
+                                                    <div><b>{{ talla|upper }} :</b> <span>{{ cantidad }} ud.</span></div>
+                                                {% endif %}
                                             {% endfor %}
                                         </div>
                                     </td>

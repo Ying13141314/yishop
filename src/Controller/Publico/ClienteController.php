@@ -2,7 +2,6 @@
 
 namespace App\Controller\Publico;
 
-use App\Entity\Cliente;
 use App\Repository\ClienteRepository;
 use App\Repository\PedidoRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

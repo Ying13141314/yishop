@@ -80,17 +80,6 @@ class ClienteRepository extends ServiceEntityRepository implements PasswordUpgra
 
         return $lista;
     }
-    
-    public function getPedidobyIdCliente(int $idCliente){
-        $query = $this->createQueryBuilder('c')
-            ->leftJoin('','PE')
-            ->where('PE.idCliente = :idCliente')
-            ->setParameter('idCliente', $idCliente);
-
-        return $query->getQuery()->getResult();
-            
-            
-    }
 
     // /**
     //  * @return Cliente[] Returns an array of Cliente objects
