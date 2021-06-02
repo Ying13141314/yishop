@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use DateTime;
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -28,9 +29,9 @@ class Pedido
     /**
      * @var DateTime
      *
-     * @ORM\Column(name="fecha", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="fecha", type="datetime", options={"default"="CURRENT_TIMESTAMP"})
      */
-    private DateTime $fecha;
+    private $fecha;
 
     /**
      * @var string
@@ -54,14 +55,44 @@ class Pedido
     private string $codigoPostal;
 
     /**
-     * @var Cliente
+     * @var Cliente|null
      *
      * @ORM\ManyToOne(targetEntity="Cliente")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idCliente", referencedColumnName="id")
      * })
      */
-    private Cliente $cliente;
+    private $cliente;
+    
+    private $idCliente;
+
+    public function __construct() {
+        $this->setFecha(new DateTime());
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIdCliente()
+    {
+        if ($this->cliente != null) {
+            return $this->cliente->getId();
+        }
+        return null;
+    }
+
+    public function getIdClienteRaw()
+    {
+        return $this->idCliente;
+    }
+
+    /**
+     * @param mixed $idCliente
+     */
+    public function setIdCliente($idCliente): void
+    {
+        $this->idCliente = $idCliente;
+    }
 
     public function getId(): ?int
     {
@@ -123,7 +154,7 @@ class Pedido
 
     public function setCliente(?Cliente $cliente): self
     {
-        $this->$cliente = $cliente;
+        $this->cliente = $cliente;
 
         return $this;
     }

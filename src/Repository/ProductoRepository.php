@@ -28,7 +28,7 @@ class ProductoRepository extends ServiceEntityRepository
             ->orderBy('producto.actualizado', 'DESC')
             ->setMaxResults(self::PAGINATOR_PER_PAGE)
             ->setFirstResult($offset);
-        
+
         if ($tipo !== 'todos') {
             $query = $query
                 ->leftJoin('producto.categorias', 'prod_cat')
@@ -36,17 +36,17 @@ class ProductoRepository extends ServiceEntityRepository
                 ->where('cat.nombre = :tipo')
                 ->setParameter('tipo', $tipo);
         }
-        
+
         if ($search !== '') {
             $searchArr = explode(' ', $search);
             $consulta = '';
-            
+
             foreach ($searchArr as $key => $busqueda) {
                 $param = 'busqueda' . $key;
-                $query = $query->setParameter($param, '%'. $busqueda . '%');
+                $query = $query->setParameter($param, '%' . $busqueda . '%');
                 $consulta .= $key === 0 ? ' producto.nombre LIKE :' . $param : ' OR producto.nombre LIKE :' . $param;
             }
-            
+
             $query = $query->andWhere($consulta);
         }
 

@@ -35,8 +35,8 @@ security:
                 path: app_logout
 
         cliente:
-              pattern: ^/cliente
-              anonymous: false
+              pattern: ^/
+              anonymous: true
               lazy: true
               provider: app_cliente_provider
               guard:

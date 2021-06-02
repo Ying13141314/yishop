@@ -2,17 +2,14 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Categoria;
 use App\Entity\Producto;
 use App\Form\ImagenType;
 use App\Repository\CategoriaRepository;
-use App\Repository\TallaRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Option\TextAlign;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
-use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
@@ -26,12 +23,10 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 class ProductosCrudController extends AbstractCrudController
 {
     private CategoriaRepository $categoriaRepository;
-    private TallaRepository $tallaRepository;
 
-    public function __construct(CategoriaRepository $categoriaRepository, TallaRepository $tallaRepository)
+    public function __construct(CategoriaRepository $categoriaRepository)
     {
         $this->categoriaRepository = $categoriaRepository;
-        $this->tallaRepository = $tallaRepository;
     }
 
     public static function getEntityFqcn(): string
@@ -71,13 +66,24 @@ class ProductosCrudController extends AbstractCrudController
                 ->setLabel('Categorías')
                 ->allowMultipleChoices()
                 ->setChoices($this->categoriaRepository->getChoices()),
-            
-            ChoiceField::new('tallasIds')
-                ->setLabel('Tallas')
-                ->allowMultipleChoices()
-                ->setChoices($this->tallaRepository->getChoices()),
 
+            NumberField::new('xl')
+                ->addCssClass('field-money')
+                ->setTextAlign(TextAlign::RIGHT),
             
+            NumberField::new('l')
+                ->addCssClass('field-money')
+                ->setTextAlign(TextAlign::RIGHT),
+            
+            NumberField::new('m')
+                ->addCssClass('field-money')
+                ->setTextAlign(TextAlign::RIGHT),
+            
+            NumberField::new('s')
+                ->addCssClass('field-money')
+                ->setTextAlign(TextAlign::RIGHT),
+
+
             BooleanField::new('activo')
         ];
 
@@ -97,7 +103,6 @@ class ProductosCrudController extends AbstractCrudController
                 ->onlyOnForms();
 
         }
-
 
         return $campos;
     }
@@ -134,7 +139,7 @@ class ProductosCrudController extends AbstractCrudController
     public function updateEntity(EntityManagerInterface $entityManager, $entityInstance): void
     {
         $this->insertCategorias($entityManager, $entityInstance, true);
-        
+
         parent::updateEntity($entityManager, $entityInstance);
     }
 
@@ -147,7 +152,7 @@ class ProductosCrudController extends AbstractCrudController
                 'productoId' => $productoId,
             ]);
         }
-        
+
         foreach ($entityInstance->getCategoriasIds() as $categoriasId) {
             $entityManager->getConnection()->executeQuery("INSERT INTO categorias_productos VALUE (0, :categoriaId, :productoId)", [
                 'productoId' => $productoId,

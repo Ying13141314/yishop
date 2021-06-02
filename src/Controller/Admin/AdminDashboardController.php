@@ -6,7 +6,6 @@ use App\Entity\Categoria;
 use App\Entity\Cliente;
 use App\Entity\Pedido;
 use App\Entity\Producto;
-use App\Entity\Talla;
 use App\Entity\Usuario;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -46,8 +45,7 @@ class AdminDashboardController extends AbstractDashboardController
             MenuItem::linkToCrud('Productos', 'fa fa-file-text', Producto::class),
             MenuItem::linkToCrud('Pedidos', 'fa fa-file-text', Pedido::class),
             MenuItem::linkToCrud('Usuarios', 'fa fa-file-text', Usuario::class),
-            MenuItem::linkToCrud('Categorias', 'fa fa-file-text', Categoria::class),
-            MenuItem::linkToCrud('Tallas', 'fa fa-file-text', Talla::class)
+            MenuItem::linkToCrud('Categorias', 'fa fa-file-text', Categoria::class)
         ];
     }
 }

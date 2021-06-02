@@ -69,6 +69,18 @@ class ClienteRepository extends ServiceEntityRepository implements PasswordUpgra
         }
     }
 
+    public function getChoices(): array
+    {
+        $lista = $this->createQueryBuilder('c', 'c.nombre')
+            ->getQuery()->getArrayResult();
+
+        foreach ($lista as $key => $item) {
+            $lista[$key] = $item['id'];
+        }
+
+        return $lista;
+    }
+
     // /**
     //  * @return Cliente[] Returns an array of Cliente objects
     //  */

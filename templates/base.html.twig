@@ -118,9 +118,6 @@
                     <span class="badge badge-pill bg-danger" hidden="true">1</span>
                     <span><i class="fas fa-shopping-cart"></i></span>
                 </a>
-                <a class="text-reset me-3 dropdown-toggle hidden-arrow" href="/cliente/login">
-                    <span><i class="fas fa-user"></i></span>
-                </a>
                 
                 <!-- Avatar -->
                 <a
@@ -131,27 +128,25 @@
                         data-mdb-toggle="dropdown"
                         aria-expanded="false"
                 >
-                    <img
-                            src="https://mdbootstrap.com/img/new/avatars/2.jpg"
-                            class="rounded-circle"
-                            height="25"
-                            alt=""
-                            loading="lazy"
-                    />
+                    <span><i class="fas fa-user"></i></span>
                 </a>
                 <ul
                         class="dropdown-menu dropdown-menu-end"
                         aria-labelledby="navbarDropdownMenuLink"
                 >
+                    {% if app.user %}
                     <li>
-                        <a class="dropdown-item" href="#">My profile</a>
+                        <a class="dropdown-item" href="/cliente">Mi perfil</a>
                     </li>
                     <li>
-                        <a class="dropdown-item" href="#">Settings</a>
+                        <a class="dropdown-item" href="{{ path('app_logoutCliente') }}">Logout</a>
                     </li>
-                    <li>
-                        <a class="dropdown-item" href="#">Logout</a>
-                    </li>
+                        
+                    {% else %}
+                        <li>
+                            <a class="dropdown-item" href="/cliente/login">Login o Registrar</a>
+                        </li>
+                    {% endif %}
                 </ul>
             </div>
             <!-- Right elements -->

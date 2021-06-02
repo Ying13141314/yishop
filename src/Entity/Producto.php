@@ -97,12 +97,26 @@ class Producto
     private $categorias;
 
     private $categoriasIds;
-    
+
     /**
-     * @ORM\OneToMany(targetEntity=TallasProductos::class, mappedBy="producto", orphanRemoval=true)
+     * @ORM\Column(type="integer", nullable=true)
      */
-    private $tallasProductos;
-    private $tallasIds;
+    private $xl;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $l;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $m;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $s;
 
     public function __construct()
     {
@@ -110,7 +124,6 @@ class Producto
         $this->setCreado(new DateTime());
         $this->setActualizado(new DateTime());
         $this->categorias = new ArrayCollection();
-        $this->tallasProductos = new ArrayCollection();
     }
 
     public function getId()
@@ -316,59 +329,50 @@ class Producto
         return $categoriasIds;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getTallasIds()
+    public function getXl(): ?int
     {
-        if (!empty($this->tallasIds)) {
-            return $this->tallasIds;
-        }
-
-        /**
-         * @var tallasProductos $tallasProductos
-         */
-        $tallasIds = [];
-        foreach ($this->tallasProductos as $tallasProductos) {
-            $tallasIds[] =  $tallasProductos->getTalla()->getId();
-        }
-        return $tallasIds;
+        return $this->xl;
     }
 
-    /**
-     * @param mixed $tallasIds
-     */
-    public function setTallasIds($tallasIds): void
+    public function setXl(?int $xl): self
     {
-        $this->tallasIds = $tallasIds;
-    }
-
-    /**
-     * @return Collection|TallasProductos[]
-     */
-    public function getTallasProductos(): Collection
-    {
-        return $this->tallasProductos;
-    }
-
-    public function addTallasProducto(TallasProductos $tallasProducto): self
-    {
-        if (!$this->tallasProductos->contains($tallasProducto)) {
-            $this->tallasProductos[] = $tallasProducto;
-            $tallasProducto->setProducto($this);
-        }
+        $this->xl = $xl;
 
         return $this;
     }
 
-    public function removeTallasProducto(TallasProductos $tallasProducto): self
+    public function getL(): ?int
     {
-        if ($this->tallasProductos->removeElement($tallasProducto)) {
-            // set the owning side to null (unless already changed)
-            if ($tallasProducto->getProducto() === $this) {
-                $tallasProducto->setProducto(null);
-            }
-        }
+        return $this->l;
+    }
+
+    public function setL(?int $l): self
+    {
+        $this->l = $l;
+
+        return $this;
+    }
+
+    public function getM(): ?int
+    {
+        return $this->m;
+    }
+
+    public function setM(?int $m): self
+    {
+        $this->m = $m;
+
+        return $this;
+    }
+
+    public function getS(): ?int
+    {
+        return $this->s;
+    }
+
+    public function setS(?int $s): self
+    {
+        $this->s = $s;
 
         return $this;
     }
