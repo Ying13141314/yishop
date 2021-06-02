@@ -90,4 +90,40 @@ class CarritoCompraController extends AbstractController
 
         return $this->json($carrito);
     }
+
+    /**
+     * @Route("/carrito", name="carrito.add", methods={"DELETE"})
+     */
+    public function remove(Request $request): Response
+    {
+        $id = $request->request->get('id');
+
+        $session = $request->getSession();
+
+        $carrito = $session->get('productos');
+        
+        if (!$carrito) {
+            return $this->json('error');
+        }
+
+        if (!isset($carrito[$id])) {
+            return $this->json('error');
+        }
+        
+        unset($carrito[$id]);
+
+        $subtotal = 0;
+        foreach ($carrito as $id => $cantidades) {
+
+            $producto = $this->productoRepository->find($id);
+
+            $productos[] = $producto;
+            $subtotal += $producto->calcularTotal();
+
+        }
+
+        $subtotal = number_format($subtotal, 2, ',','');
+
+        return $this->json("$subtotal €");
+    }
 }
