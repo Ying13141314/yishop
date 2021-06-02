@@ -89,14 +89,15 @@
                         <a class="nav-link" href="/productos/categoria/accesorios">Accesorios</a>
                     </li>
                 </ul>
-                <form method="get" action="{{ path('productos.listado', {tipo: 'todos' }) }}" class="d-flex input-group w-auto mr-2">
-                    <input  autocomplete="off"
-                            type="search"
-                            class="form-control rounded"
-                            placeholder="Búsqueda"
-                            aria-label="Search"
-                            name="search"
-                            value="{{ search|default('') }}"
+                <form method="get" action="{{ path('productos.listado', {tipo: 'todos' }) }}"
+                      class="d-flex input-group w-auto mr-2">
+                    <input autocomplete="off"
+                           type="search"
+                           class="form-control rounded"
+                           placeholder="Búsqueda"
+                           aria-label="Search"
+                           name="search"
+                           value="{{ search|default('') }}"
                     />
                     <button
                             class="btn btn-outline-primary"
@@ -112,13 +113,13 @@
 
             <!-- Right elements -->
             <div class="d-flex align-items-center">
-                
+
                 <!-- Icon -->
                 <a class="text-reset me-3" href="/carrito/compra">
                     <span class="badge badge-pill bg-danger" hidden="true">1</span>
                     <span><i class="fas fa-shopping-cart"></i></span>
                 </a>
-                
+
                 <!-- Avatar -->
                 <a
                         class="dropdown-toggle d-flex align-items-center hidden-arrow"
@@ -135,13 +136,13 @@
                         aria-labelledby="navbarDropdownMenuLink"
                 >
                     {% if app.user %}
-                    <li>
-                        <a class="dropdown-item" href="/cliente">Mi perfil</a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" href="{{ path('app_logoutCliente') }}">Logout</a>
-                    </li>
-                        
+                        <li>
+                            <a class="dropdown-item" href="/cliente">Mi perfil</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{{ path('app_logoutCliente') }}">Logout</a>
+                        </li>
+
                     {% else %}
                         <li>
                             <a class="dropdown-item" href="/cliente/login">Login o Registrar</a>
@@ -155,7 +156,7 @@
     </nav>
     <!-- Navbar -->
 </header>
-    
+
 {% block body %}{% endblock %}
 
 <footer class="bg-light text-center text-white">

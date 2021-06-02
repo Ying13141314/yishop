@@ -42,7 +42,7 @@ class PedidoCrudController extends AbstractCrudController
                     'Enviado' => Pedido::ENVIADO,
                 ]),
 
-            TextEditorField::new('direccion'),
+            TextField::new('direccion'),
 
             TextField::new('codigo_postal'),
 

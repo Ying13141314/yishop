@@ -3,18 +3,62 @@
 {% block title %}Hello PedidoController!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <div class="container mb-1" style="min-height:73vh">
+        <div class="row mt-5">
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+            <div class="col-lg-8 col-md-12 col-sm-12">
+                <div class="mb-3 h-100">
+                    <h4 class="card-title ml-3 mt-2">Dirección de Envío</h4>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-8">
+                            <div class="card direciónCard">
+                                <div class="card-body">
+                                    <h5 class="card-title">Nombre y apellidos</h5>
+                                    <p class="card-text">
+                                       Dirección, código postal, provincia
+                                    </p>
+                                    <a href="#" class="btn btn-primary">Editar</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 d-flex align-items-center">
+                                <button type="button" class="btn btn-outline-dark btn-lg" data-mdb-ripple-color="dark" data-toggle="modal" data-target="#exampleModalCenter">+Añadir otra dirección de envío</button>
+                        </div>
+                    </div>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/laragon/www/yishop/src/Controller/PedidoController.php'|file_link(0) }}">src/Controller/PedidoController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/laragon/www/yishop/templates/pedido/index.html.twig'|file_link(0) }}">templates/pedido/index.html.twig</a></code></li>
-    </ul>
-</div>
+
+                    <div class="mt-5 mb-3 h-100">
+                        <h4 class="card-title ml-3 mt-2">Forma de Pago</h4>
+                        <div class="card-footer">
+                            <label>Actualmente solo aceptamos pago contra-reembolso, disculpa por la molestia</label>
+                            <img style="height:150px; width:150px; text-align:center"
+                                 src="https://www.loginstore.com/contraentrega/icono-cod.png"/>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-12 col-sm-12">
+                <div class="card text-center w-100">
+                    <div class="card-header"><h5 class="card-title">Resumen Del Pedido</h5></div>
+                    <div class="card-body">
+                        <div class="row justify-content-around">
+                            <p class="card-text col-lg-6">
+                                Subtotal
+                            </p>
+                            <p class="card-text col-lg-6">
+                            </p>
+                        </div>
+
+                        <a href="/pedido" class="btn btn-dark d-grid gap-2 col-12 mx-auto">Realizar el pedido</a>
+                    </div>
+                    
+
+                </div>
+            </div>
+        </div>
+
+    </div>
 {% endblock %}

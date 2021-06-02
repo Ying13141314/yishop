@@ -84,30 +84,27 @@
                             <thead>
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">First</th>
-                                <th scope="col">Last</th>
-                                <th scope="col">Handle</th>
+                                <th scope="col">Fecha</th>
+                                <th scope="col">Estado</th>
+                                <th scope="col">Dirección</th>
+                                <th scope="col">Detalle</th>
                             </tr>
                             </thead>
                             <tbody>
+                            {% for pedido in pedidos %}
                             <tr>
-                                <th scope="row">1</th>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
+                                <th scope="row">{{ loop.index }}</th>
+                                <td>{{ pedido.fecha|date }}</td>
+                                <td>{{ pedido.estado }}</td>
+                                <td>{{ pedido.direccion|raw }}</td>
+                                <td>
+                                    <button type="button" class="btn btn-primary btn-sm px-3" data-toggle="modal" 
+                                            data-target="#modal-detalles">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </td>
                             </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>Jacob</td>
-                                <td>Thornton</td>
-                                <td>@fat</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">3</th>
-                                <td>Larry</td>
-                                <td>the Bird</td>
-                                <td>@twitter</td>
-                            </tr>
+                            {% endfor %}
                             </tbody>
                         </table>
                     </div>
@@ -116,6 +113,30 @@
             </div>
         </div>
     </div>
+
+
+    <div class="modal fade " id="modal-detalles" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Detalles de la Venta</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    
+                    
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
 {% endblock %}
 
 {% block javascripts %}

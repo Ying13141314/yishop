@@ -4,6 +4,7 @@ namespace App\Controller\Publico;
 
 use App\Entity\Cliente;
 use App\Repository\ClienteRepository;
+use App\Repository\PedidoRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,10 +16,12 @@ class ClienteController extends AbstractController
     /**
      * @Route("/cliente", name="cliente")
      */
-    public function index(): Response
+    public function index(Request $request, UserInterface $cliente, PedidoRepository $repo): Response
     {
+        $pedidos = $repo->findBy(['cliente' => $cliente],['fecha' => 'desc']);
+        
         return $this->render('publico/cliente/index.html.twig', [
-            'controller_name' => 'ClienteController',
+            'pedidos' => $pedidos,
         ]);
     }
 
