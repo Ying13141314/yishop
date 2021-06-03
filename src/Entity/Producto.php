@@ -434,4 +434,15 @@ class Producto
         
         return false;
     }
+
+    public function getCantidadDeTalla(int $talla)
+    {
+        switch ($talla) {
+            case 'xl': return $this->getXl();
+            case 'l': return $this->getL();
+            case 'm': return $this->getM();
+            case 's': return $this->getS();
+        }
+        
+    }
 }

@@ -94,12 +94,10 @@ class CarritoCompraController extends AbstractController
     }
 
     /**
-     * @Route("/carrito", name="carrito_delete", methods={"DELETE"})
+     * @Route("/carrito/{productoId}", name="carrito_delete", methods={"DELETE"})
      */
-    public function remove(Request $request): Response
+    public function remove(int $productoId, Request $request): Response
     {
-        $id = $request->request->get('id');
-
         $session = $request->getSession();
 
         $carrito = $session->get('productos');
@@ -108,20 +106,24 @@ class CarritoCompraController extends AbstractController
             return $this->json('error');
         }
 
-        if (!isset($carrito[$id])) {
+        if (!isset($carrito[$productoId])) {
             return $this->json('error');
         }
         
-        unset($carrito[$id]);
+        unset($carrito[$productoId]);
+        
+        $session->set('productos', $carrito);
 
         $subtotal = 0;
+        
         foreach ($carrito as $id => $cantidades) {
-
             $producto = $this->productoRepository->find($id);
 
-            $productos[] = $producto;
+            foreach ($cantidades as $talla => $cantidad) {
+                $producto->setCantidades($talla, $cantidad);
+            }
+            
             $subtotal += $producto->calcularTotal();
-
         }
 
         $session->set('subtotal', $subtotal);

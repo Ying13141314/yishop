@@ -9,3 +9,7 @@
 .direciónCard{
     border:1px solid
 }
+
+td {
+    vertical-align: middle;
+}

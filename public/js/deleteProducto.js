@@ -1,9 +1,9 @@
 $(document).ready(() => {
-    
+
     $('.delete-producto').on('click', function (e) {
         e.preventDefault();
-        $me = $(this);
-        
+        const $me = $(this);
+
         Swal.fire({
             title: 'Vas a eliminar un producto de tu carrito',
             text: "¿Estás seguro de que quieres continuar?",
@@ -14,18 +14,21 @@ $(document).ready(() => {
             confirmButtonText: 'Sí, eliminalo',
             cancelButtonText: 'Cancelar'
         }).then((result) => {
+
             if (!result.isConfirmed) return;
+
             $.ajax({
-                data: {
-                    id: $me.data(id),
-                },
+                data: { id: $me.data('id') },
                 dataType: 'JSON',
-                url: '/carrito',
+                url: `/carrito/${$me.data('id')}`,
                 method: 'DELETE',
                 success: function (response) {
                     $('#subtotal').empty().html(response);
+
+                    $me.parents('tr').first().remove();
                 }
             });
+
         })
     })
 

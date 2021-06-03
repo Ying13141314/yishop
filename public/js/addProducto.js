@@ -43,6 +43,7 @@ $(document).ready(() => {
         }
         
         const productoId = $(this).data('id');
+        
         $.ajax({
             data: {
                 id: productoId,
@@ -53,7 +54,7 @@ $(document).ready(() => {
             url: '/carrito',
             method: 'POST',
             success: function (response) {
-                console.log(response)
+                console.log(response);
             }
         });
         
