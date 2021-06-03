@@ -81,7 +81,12 @@
                             </p>
                         </div>
 
-                        <a href="/pedido" class="btn btn-dark d-grid gap-2 col-12 mx-auto">PAGAR</a>
+                        {% if app.user %}
+                            <a href="/pedido" class="btn btn-dark d-grid gap-2 col-12 mx-auto">PAGAR</a>
+                        {% else %}
+                            <a href="/cliente/login" class="btn btn-dark d-grid gap-2 col-12 mx-auto">INICIE SESIÓN PARA PAGAR</a>
+                        {% endif %}
+                        
                     </div>
                     <div class="card-footer">
                         <label>ACEPTAMOS</label>

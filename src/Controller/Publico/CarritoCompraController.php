@@ -51,6 +51,8 @@ class CarritoCompraController extends AbstractController
 
         }
 
+        $session->set('subtotal', $subtotal);
+
         return $this->render('publico/carrito_compra/index.html.twig', [
             'controller_name' => 'CarritoCompraController',
             'productos' => $productos,
@@ -59,7 +61,7 @@ class CarritoCompraController extends AbstractController
     }
 
     /**
-     * @Route("/carrito", name="carrito.add", methods={"POST"})
+     * @Route("/carrito", name="carrito_add", methods={"POST"})
      */
     public function add(Request $request): Response
     {
@@ -92,7 +94,7 @@ class CarritoCompraController extends AbstractController
     }
 
     /**
-     * @Route("/carrito", name="carrito.add", methods={"DELETE"})
+     * @Route("/carrito", name="carrito_delete", methods={"DELETE"})
      */
     public function remove(Request $request): Response
     {
@@ -121,6 +123,8 @@ class CarritoCompraController extends AbstractController
             $subtotal += $producto->calcularTotal();
 
         }
+
+        $session->set('subtotal', $subtotal);
 
         $subtotal = number_format($subtotal, 2, ',','');
 

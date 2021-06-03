@@ -272,4 +272,9 @@ class Cliente implements UserInterface
 
         return $this;
     }
+    
+    public function getNombreCompleto()
+    {
+        return $this->nombre . ' ' . $this->apellidos;
+    }
 }

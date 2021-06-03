@@ -53,6 +53,11 @@ class DetallePedido
      */
     private Producto $producto;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $talla;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -102,6 +107,18 @@ class DetallePedido
     public function setProducto(Producto $producto): self
     {
         $this->producto = $producto;
+
+        return $this;
+    }
+
+    public function getTalla(): ?string
+    {
+        return $this->talla;
+    }
+
+    public function setTalla(string $talla): self
+    {
+        $this->talla = $talla;
 
         return $this;
     }

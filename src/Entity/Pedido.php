@@ -152,7 +152,7 @@ class Pedido
         return $this->cliente;
     }
 
-    public function setCliente(?Cliente $cliente): self
+    public function setCliente($cliente): self
     {
         $this->cliente = $cliente;
 

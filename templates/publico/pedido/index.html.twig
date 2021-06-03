@@ -14,16 +14,19 @@
                         <div class="col-sm-8">
                             <div class="card direciónCard">
                                 <div class="card-body">
-                                    <h5 class="card-title">Nombre y apellidos</h5>
+                                    <h5 class="card-title">{{ cliente.nombreCompleto }}</h5>
                                     <p class="card-text">
-                                       Dirección, código postal, provincia
+                                        {{ cliente.direccion|raw }}, {{ cliente.codigoPostal }}
                                     </p>
                                     <a href="#" class="btn btn-primary">Editar</a>
                                 </div>
                             </div>
                         </div>
                         <div class="col-sm-4 d-flex align-items-center">
-                                <button type="button" class="btn btn-outline-dark btn-lg" data-mdb-ripple-color="dark" data-toggle="modal" data-target="#exampleModalCenter">+Añadir otra dirección de envío</button>
+                                <button type="button" class="btn btn-outline-dark btn-lg" 
+                                        data-mdb-ripple-color="dark" data-toggle="modal" data-target="#nueva-direccion">
+                                    +Añadir otra dirección de envío
+                                </button>
                         </div>
                     </div>
 
@@ -49,13 +52,37 @@
                                 Subtotal
                             </p>
                             <p class="card-text col-lg-6">
+                                {{ subtotal|format_currency('EUR', locale='es') }}
                             </p>
                         </div>
 
-                        <a href="/pedido" class="btn btn-dark d-grid gap-2 col-12 mx-auto">Realizar el pedido</a>
+                        <form method="post" action="{{ path('pedido_crear') }}">
+                            <button type="submit" class="btn btn-dark d-grid gap-2 col-12 mx-auto">Realizar el pedido</button>
+                        </form>
                     </div>
                     
 
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="nueva-direccion" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        ...
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
                 </div>
             </div>
         </div>
