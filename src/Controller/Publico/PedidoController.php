@@ -29,17 +29,45 @@ class PedidoController extends AbstractController
     /**
      * @Route("/pedido", name="pedido", methods={"GET"})
      */
-    public function index(Request $request, UserInterface $cliente): Response
+    public function index(Request $request, UserInterface $cliente, ProductoRepository $productoRepository): Response
     {
         $session = $request->getSession();
 
         $carrito = $session->get('productos');
         $subtotal = $session->get('subtotal');
 
-
         if (!$carrito)
-            return $this->render('publico/carrito_compra/carritoVacio.html.twig');
+            return new RedirectResponse('/carrito/compra');
         
+        // comprobación cantidad
+        $productosAgotados = [];
+
+        foreach ($carrito as $idProducto => $cantidades) {
+            $producto = $productoRepository->find($idProducto);
+            $nombreProducto = $producto->getNombre();
+
+            foreach ($cantidades as $talla => $cantidad) {
+
+                if ($talla === "") {
+                    $cantidadActual = $producto->getCantidad();
+                } else {
+                    $cantidadActual = $producto->getCantidadDeTalla($talla);
+                }
+
+                $cantidadRestante = $cantidadActual - $cantidad;
+
+                if ($cantidadRestante < 0) {
+                    $productosAgotados[$nombreProducto][$talla] = [
+                        'cantidad' => $cantidad,
+                        'cantidadActual' => $cantidadActual
+                    ];
+                }
+            }
+        }
+
+        if (count($productosAgotados) > 0) {
+            return $this->redirect($this->generateUrl('carrito_compra', ['productosAgotados' => $productosAgotados]));
+        }
         
         return $this->render('publico/pedido/index.html.twig', [
             'cliente' => $cliente,
@@ -52,48 +80,15 @@ class PedidoController extends AbstractController
      */
     public function crear(Request $request, UserInterface $cliente, ProductoRepository $productoRepository): Response
     {
-//        if (!$cliente instanceof Cliente) {
-//            throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', \get_class($cliente)));
-//        }
-//        
-//        $session = $request->getSession();
-//        $carrito = $session->get('productos');
-//
-//        if (!$carrito)
-//            return new RedirectResponse('/carrito/compra');
-//
-//
-//        // comprobación cantidad
-//        $productosAgotados = [];
-//        
-//        foreach ($carrito as $idProducto => $cantidades) {
-//            $producto = $productoRepository->find($idProducto);
-//            
-//            foreach ($cantidades as $talla => $cantidad) {
-//                
-//                if ($talla === "") {
-//                    $cantidadActual = $producto->getCantidad();
-//                } else {
-//                    $cantidadActual = $producto->getCantidadDeTalla($talla);
-//                }
-//                
-//                $cantidadRestante = $cantidadActual - $cantidad;
-//                
-//                if ($cantidadRestante < 0) {
-//                    $productosAgotados[$idProducto][$talla] = [
-//                        'cantidad' => $cantidad,
-//                        'cantidadActual' => $cantidadActual
-//                    ];
-//                }
-//            }
-//        }
-//
-//        if (count($productosAgotados) > 0) {
-//            
-//            
-//            
-//            return 'hola';
-//        }
+        if (!$cliente instanceof Cliente) {
+            throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', \get_class($cliente)));
+        }
+        
+        $session = $request->getSession();
+        $carrito = $session->get('productos');
+
+        if (!$carrito)
+            return new RedirectResponse('/carrito/compra');
         
 
         // generación pedido
@@ -108,12 +103,11 @@ class PedidoController extends AbstractController
         $entityManager->persist($pedido);
         $entityManager->flush();
         
-        
+        // generación detalles de pedido
         foreach ($carrito as $idProducto => $cantidades) {
             $producto = $productoRepository->find($idProducto);
             $precio = $producto->getPrecio();
-
-
+            
             foreach ($cantidades as $talla => $cantidad) {
                 
                 $detalles = new DetallePedido();
@@ -127,6 +121,18 @@ class PedidoController extends AbstractController
                 $entityManager->persist($detalles);
                 $entityManager->flush();
                 
+                // se resta la cantidad comprada a los productos
+                
+                if ($talla === '') {
+                    $cantidadActual = $producto->getCantidad();
+                    $producto->setCantidad($cantidadActual - $cantidad);
+                } else {
+                    $cantidadActual = $producto->getCantidadDeTalla($talla);
+                    $producto->setCantidadDeTalla($talla, $cantidadActual - $cantidad);
+                }
+
+                $entityManager->persist($producto);
+                $entityManager->flush();
             }
             
         }

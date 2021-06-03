@@ -26,13 +26,18 @@ class CarritoCompraController extends AbstractController
     public function index(Request $request): Response
     {
         $session = $request->getSession();
-
         $carrito = $session->get('productos');
-        
-        
+
+        // comprobamos si hay carrito
         if (!$carrito)
             return $this->render('publico/carrito_compra/carritoVacio.html.twig');
-
+        
+        
+        // tomamos si hay productos agotados
+        $productosAgotados = $request->query->get('productosAgotados', []);
+        
+        
+        // hacemos los calculos para la vista
         $productos = [];
         $subtotal = 0;
 
@@ -41,22 +46,21 @@ class CarritoCompraController extends AbstractController
             $producto = $this->productoRepository->find($id);
 
             foreach ($cantidades as $talla => $cantidad) {
-
                 $producto->setCantidades($talla, $cantidad);
-
             }
-
+            
             $productos[] = $producto;
             $subtotal += $producto->calcularTotal();
-
         }
 
         $session->set('subtotal', $subtotal);
 
+        // renderizamos vista
         return $this->render('publico/carrito_compra/index.html.twig', [
             'controller_name' => 'CarritoCompraController',
             'productos' => $productos,
             'subtotal' => $subtotal,
+            'productosAgotados' => $productosAgotados
         ]);
     }
 

@@ -5,11 +5,9 @@
 {% block body %}
     <div class="container mb-1" style="min-height:73vh">
         <div class="row mt-5">
-
             <div class="col-lg-8 col-md-6 col-sm-12">
                 <div class="card mb-3 h-100">
                     <h4 class="card-title ml-4 mt-2">Sumario Del Artículo</h4>
-
 
                     <div class="table-responsive">
                         <table class="table">
@@ -33,33 +31,33 @@
                                 <tr>
                                     <td colspan="2">
                                         <div>
-                                            <img
-                                                    
-                                                    src="{{ asset('img/productos/' ~ producto.getImagenes.first().ruta ) }}"
-                                                    alt="..."
-                                                    class="img-fluid"
-                                                    style="max-height:200px"
-                                            />
+                                            {% if producto.getImagenes|length > 0 %}
+                                                <img src="{{ asset('img/productos/' ~ producto.getImagenes.first().ruta ) }}"
+                                                     alt="..." class="img-fluid" style="max-height:200px"/>
+                                            {% endif %}
                                         </div>
                                     </td>
-                                    <td colspan="2" style="vertical-align: middle; width:100px"><label>{{ producto.nombre }}</label></td>
+                                    <td colspan="2" style="vertical-align: middle; width:100px">
+                                        <label>{{ producto.nombre }}</label></td>
                                     <td></td>
                                     <td>{{ producto.getPrecioEur|format_currency('EUR', locale='es') }}</td>
                                     <td>
                                         <div class="d-flex flex-column">
                                             {% for talla, cantidad in producto.getCantidades() %}
-                                                
+
                                                 {% if talla is empty %}
                                                     <div><span>{{ cantidad }} ud.</span></div>
                                                 {% else %}
-                                                    <div><b>{{ talla|upper }} :</b> <span>{{ cantidad }} ud.</span></div>
+                                                    <div><b>{{ talla|upper }} :</b> <span>{{ cantidad }} ud.</span>
+                                                    </div>
                                                 {% endif %}
                                             {% endfor %}
                                         </div>
                                     </td>
                                     <td>{{ producto.total|format_currency('EUR', locale='es') }}</td>
                                     <td>
-                                        <button type="button" class="btn btn-danger btn-sm px-3 delete-producto" data-id="{{ producto.id }}">
+                                        <button type="button" class="btn btn-danger btn-sm px-3 delete-producto"
+                                                data-id="{{ producto.id }}">
                                             <i class="fas fa-times"></i>
                                         </button>
                                     </td>
@@ -90,9 +88,10 @@
                         {% if app.user %}
                             <a href="/pedido" class="btn btn-dark d-grid gap-2 col-12 mx-auto">PAGAR</a>
                         {% else %}
-                            <a href="/cliente/login" class="btn btn-dark d-grid gap-2 col-12 mx-auto">INICIE SESIÓN PARA PAGAR</a>
+                            <a href="/cliente/login" class="btn btn-dark d-grid gap-2 col-12 mx-auto">INICIE SESIÓN PARA
+                                PAGAR</a>
                         {% endif %}
-                        
+
                     </div>
                     <div class="card-footer">
                         <label>ACEPTAMOS</label>
@@ -103,11 +102,51 @@
                 </div>
             </div>
         </div>
-
     </div>
+
+
+    {% if productosAgotados|length > 0 %}
+        <div class="modal fade" id="modal-agotado" tabindex="-1" aria-hidden="false">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">No puede proseguir la compra</h5>
+                        <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        {% for nombre, infoTallaCantidad in productosAgotados %}
+                            <section>
+                                <h6>{{ nombre }}</h6>
+                                {% for talla, infoCantidad in infoTallaCantidad %}
+                                    <p class="mb-1">
+                                        De la talla '{{ talla|upper }}' intentas comprar {{ infoCantidad.cantidad }} ud.
+                                        y solo nos quedan {{ infoCantidad.cantidadActual }} ud.
+                                    </p>
+                                {% endfor %}
+                            </section>
+                        {% endfor %}
+                        
+                        <p class="mt-3 text-warning">Revisa tu carrito y podrás continuar. Disculpa las molestias</p>
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-dark" data-mdb-dismiss="modal">
+                            Cerrar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
 
 {% endblock %}
 
 {% block javascripts %}
     <script src="{{ asset('js/deleteProducto.js') }}" type="text/javascript"></script>
+
+    <script>
+        $(window).on('load', function () {
+            $('#modal-agotado').modal('show');
+        });
+    </script>
 {% endblock %}

@@ -435,7 +435,7 @@ class Producto
         return false;
     }
 
-    public function getCantidadDeTalla(int $talla)
+    public function getCantidadDeTalla($talla)
     {
         switch ($talla) {
             case 'xl': return $this->getXl();
@@ -443,6 +443,18 @@ class Producto
             case 'm': return $this->getM();
             case 's': return $this->getS();
         }
-        
+    }
+
+    public function setCantidadDeTalla($talla, $cantidad)
+    {
+        switch ($talla) {
+            case 'xl': $this->setXl($cantidad);
+                break;
+            case 'l': $this->setL($cantidad);
+                break;
+            case 'm':  $this->setM($cantidad);
+                break;
+            case 's': $this->setS($cantidad);
+        }
     }
 }
