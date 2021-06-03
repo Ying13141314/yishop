@@ -1,4 +1,4 @@
-.inputCliente {
+.inputCliente:read-only, .inputCliente:read-only:focus-visible {
     border:0
 }
 

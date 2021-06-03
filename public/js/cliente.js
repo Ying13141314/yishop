@@ -2,14 +2,12 @@ $(document).ready(() => {
     $('.botonEditCliente').show();
     
     $('.botonEditCliente').on('click',function (){
-        console.log('hola')
         $('.inputCliente').removeAttr('readonly');
     })
     
-    $('.inputCliente').on('change', function(){
+    $('.inputCliente').on('input', function(){
         $('.botonEditCliente').hide();
         $('.botonGuardarCliente').show()
-        
     })
     
     $('.botonGuardarCliente').on('click',function(){
@@ -23,7 +21,6 @@ $(document).ready(() => {
                 direccion: $('.inputDireccion').val(),
                 codigo: $('.inputCodigoPostal').val(),
         }
-        console.log(data);
         $.ajax({
             url : '/cliente/update',
             data: data,
@@ -31,7 +28,8 @@ $(document).ready(() => {
             dataType: 'JSON',
             success: function (response) {
                 $('.botonEditCliente').show();
-                $('.botonGuardarCliente').hide()
+                $('.botonGuardarCliente').hide();
+                $('.inputCliente').each((index, el) => $(el).prop('readonly', true));
             }
         })
     })
