@@ -27,7 +27,8 @@ class ProductoController extends AbstractController
         
         $next = min(count($paginator), $offset + ProductoRepository::PAGINATOR_PER_PAGE);
         $candidatoOffsetFinal = ceil(count($paginator) / ProductoRepository::PAGINATOR_PER_PAGE + 1 );
-        
+
+        // renderizamos la vista
         return new Response($this->renderView('/publico/producto/listado.html.twig', [
             'productos' => $paginator,
             'tipo' => $tipo,
@@ -45,6 +46,7 @@ class ProductoController extends AbstractController
      */
     public function detalles(Request $request, Producto $producto, ProductoRepository $productoRepository): Response
     {
+        // renderizamos la vista
         return new Response($this->renderView('/publico/producto/detalles.html.twig', [
             'producto' => $producto,
             'tiene_talla' => $producto->tieneTalla() == 1

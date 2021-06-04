@@ -13,6 +13,7 @@ class LoginClinteController extends AbstractController
      */
     public function index(): Response
     {
+        // renderizamos la vista
         return $this->render('publico/login_cliente/index.html.twig', [
             'controller_name' => 'LoginClinteController',
         ]);

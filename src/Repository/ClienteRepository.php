@@ -80,33 +80,5 @@ class ClienteRepository extends ServiceEntityRepository implements PasswordUpgra
 
         return $lista;
     }
-
-    // /**
-    //  * @return Cliente[] Returns an array of Cliente objects
-    //  */
-    /*
-    Publico function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    Publico function findOneBySomeField($value): ?Cliente
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
+    
 }

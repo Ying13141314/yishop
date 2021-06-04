@@ -14,6 +14,12 @@ class CarritoCompraController extends AbstractController
     private CarritoService $carrito;
     private ProductoRepository $productoRepository;
 
+    /**
+     * CarritoCompraController constructor.
+     * @param CarritoService $carrito
+     * @param ProductoRepository $productoRepository
+     * Constructor
+     */
     public function __construct(CarritoService $carrito, ProductoRepository $productoRepository)
     {
         $this->carrito = $carrito;
@@ -55,7 +61,7 @@ class CarritoCompraController extends AbstractController
 
         $session->set('subtotal', $subtotal);
 
-        // renderizamos vista
+        // renderizamos la vista
         return $this->render('publico/carrito_compra/index.html.twig', [
             'controller_name' => 'CarritoCompraController',
             'productos' => $productos,
@@ -69,6 +75,7 @@ class CarritoCompraController extends AbstractController
      */
     public function add(Request $request): Response
     {
+        //obtenemos los datos de la sessión
         $id = $request->request->get('id');
         $cantidad = $request->request->get('cantidad');
         $talla = $request->request->get('talla');

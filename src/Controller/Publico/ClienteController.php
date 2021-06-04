@@ -17,8 +17,11 @@ class ClienteController extends AbstractController
      */
     public function index(Request $request, UserInterface $cliente, PedidoRepository $repo): Response
     {
+        
+        //obtener los pedidos por el cliente y ordenado descendente
         $pedidos = $repo->findBy(['cliente' => $cliente],['fecha' => 'desc']);
         
+        //Llevamos el pedido a la vista que hemos renderizado
         return $this->render('publico/cliente/index.html.twig', [
             'pedidos' => $pedidos,
         ]);

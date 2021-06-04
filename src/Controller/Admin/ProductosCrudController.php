@@ -6,6 +6,7 @@ use App\Entity\Producto;
 use App\Form\ImagenType;
 use App\Repository\CategoriaRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Option\TextAlign;
@@ -126,9 +127,15 @@ class ProductosCrudController extends AbstractCrudController
 
     public function configureActions(Actions $actions): Actions
     {
-        return $actions->add(CRUD::PAGE_INDEX, 'detail');
+        return $actions->add(CRUD::PAGE_INDEX, 'detail')
+                    ->disable(Action::DELETE); //Deshabilitar en el caso para eliminar
     }
 
+    /**
+     * @param EntityManagerInterface $entityManager
+     * @param $entityInstance
+     * Método que realiza la inserción en easyadmin
+     */
     public function persistEntity(EntityManagerInterface $entityManager, $entityInstance): void
     {
         parent::persistEntity($entityManager, $entityInstance);
@@ -136,6 +143,11 @@ class ProductosCrudController extends AbstractCrudController
         $this->insertCategorias($entityManager, $entityInstance);
     }
 
+    /**
+     * @param EntityManagerInterface $entityManager
+     * @param $entityInstance
+     * Método que actualiza en easyadmin
+     */
     public function updateEntity(EntityManagerInterface $entityManager, $entityInstance): void
     {
         $this->insertCategorias($entityManager, $entityInstance, true);
@@ -143,6 +155,12 @@ class ProductosCrudController extends AbstractCrudController
         parent::updateEntity($entityManager, $entityInstance);
     }
 
+    /**
+     * @param EntityManagerInterface $entityManager
+     * @param $entityInstance
+     * @param bool $actualizar
+     * @throws \Doctrine\DBAL\Exception
+     */
     private function insertCategorias(EntityManagerInterface $entityManager, $entityInstance, bool $actualizar = false)
     {
         $productoId = $entityInstance->getId();

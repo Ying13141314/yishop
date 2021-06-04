@@ -36,32 +36,5 @@ class UsuarioRepository extends ServiceEntityRepository implements PasswordUpgra
         $this->_em->flush();
     }
 
-    // /**
-    //  * @return Usuario[] Returns an array of Usuario objects
-    //  */
-    /*
-    Publico function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('u.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    Publico function findOneBySomeField($value): ?Usuario
-    {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
+    
 }
