@@ -27,6 +27,11 @@ class PedidoCrudController extends AbstractCrudController
     }
 
 
+    /**
+     * @param string $pageName
+     * @return iterable
+     * Añade los campos que queremos a la vista
+     */
     public function configureFields(string $pageName): iterable
     {
         $campos = [
@@ -60,6 +65,7 @@ class PedidoCrudController extends AbstractCrudController
     {
         parent::persistEntity($entityManager, $entityInstance);
 
+        //Actualizamos el pedido con el cliente.
         $cliente = $this->clienteRepository->find($entityInstance->getIdClienteRaw());
         $entityInstance->setCliente($cliente);
         $entityManager->flush();
@@ -69,6 +75,7 @@ class PedidoCrudController extends AbstractCrudController
     {
         parent::updateEntity($entityManager, $entityInstance);
         
+        //Actualizamos el pedido con el cliente.
         $cliente = $this->clienteRepository->find($entityInstance->getIdClienteRaw());
         $entityInstance->setCliente($cliente);
         $entityManager->flush();

@@ -20,6 +20,7 @@ class ProductoController extends AbstractController
      */
     public function listado(Request $request,string $tipo, ProductoRepository $productoRepository): Response
     {
+        //Paginación.
         $offset = max(0, $request->query->getInt('offset'));
         $search = $request->query->get('search', '');
         

@@ -11,18 +11,15 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class CarritoCompraController extends AbstractController
 {
-    private CarritoService $carrito;
     private ProductoRepository $productoRepository;
 
     /**
      * CarritoCompraController constructor.
-     * @param CarritoService $carrito
      * @param ProductoRepository $productoRepository
      * Constructor
      */
-    public function __construct(CarritoService $carrito, ProductoRepository $productoRepository)
+    public function __construct(ProductoRepository $productoRepository)
     {
-        $this->carrito = $carrito;
         $this->productoRepository = $productoRepository;
     }
 
@@ -75,21 +72,23 @@ class CarritoCompraController extends AbstractController
      */
     public function add(Request $request): Response
     {
-        //obtenemos los datos de la sessión
+        //obtenemos los datos de la petición del usuario
         $id = $request->request->get('id');
         $cantidad = $request->request->get('cantidad');
         $talla = $request->request->get('talla');
 
         $session = $request->getSession();
 
+        //obtenemos el carrito de la sessión
         $carrito = $session->get('productos');
         
+        //Si existe el carrito sumamos lo nuevo a lo antiguo
         if ($carrito) {
             
             $cantidad_original = $carrito[$id][$talla] ?? 0;
 
             $carrito[$id][$talla] = $cantidad + $cantidad_original;
-            
+            // en otro caso lo creamos
         } else {
             
             $carrito[$id] = [
@@ -98,6 +97,7 @@ class CarritoCompraController extends AbstractController
             
         }
         
+        //Guardamos el nuevo carrito
         $session->set('productos', $carrito);
         
 
@@ -109,10 +109,12 @@ class CarritoCompraController extends AbstractController
      */
     public function remove(int $productoId, Request $request): Response
     {
+        //obtenemos el carrito
         $session = $request->getSession();
 
         $carrito = $session->get('productos');
         
+        //Comprobamos el carrito
         if (!$carrito) {
             return $this->json('error');
         }
@@ -121,10 +123,13 @@ class CarritoCompraController extends AbstractController
             return $this->json('error');
         }
         
+        //Eliminamos el producto del carrito
         unset($carrito[$productoId]);
         
+        //Guardamos el carrito con el producto que hemos eliminado
         $session->set('productos', $carrito);
 
+        //Recalculamos el subtotal
         $subtotal = 0;
         
         foreach ($carrito as $id => $cantidades) {
@@ -137,6 +142,7 @@ class CarritoCompraController extends AbstractController
             $subtotal += $producto->calcularTotal();
         }
 
+        //guardar el subtotal nuevo
         $session->set('subtotal', $subtotal);
 
         $subtotal = number_format($subtotal, 2, ',','');

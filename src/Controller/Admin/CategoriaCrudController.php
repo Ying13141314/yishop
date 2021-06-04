@@ -17,6 +17,11 @@ class CategoriaCrudController extends AbstractCrudController
         return Categoria::class;
     }
 
+    /**
+     * @param string $pageName
+     * @return iterable
+     * Añade los campos que queremos a la vista
+     */
     public function configureFields(string $pageName): iterable
     {
         $campos = [

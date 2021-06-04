@@ -9,6 +9,11 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
+/**
+ * Class PublicSecurityController
+ * @package App\Controller
+ * Clase generado por symfony.
+ */
 class PublicSecurityController extends AbstractController
 {
 

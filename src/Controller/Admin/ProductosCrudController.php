@@ -35,6 +35,11 @@ class ProductosCrudController extends AbstractCrudController
         return Producto::class;
     }
 
+    /**
+     * @param string $pageName
+     * @return iterable
+     * Añade los campos que queremos a la vista
+     */
     public function configureFields(string $pageName): iterable
     {
         $campos = [
@@ -160,6 +165,8 @@ class ProductosCrudController extends AbstractCrudController
      * @param $entityInstance
      * @param bool $actualizar
      * @throws \Doctrine\DBAL\Exception
+     * Recibimos un parámetro con el que sabemos si estamos actualizando o no, si la respuesta que nos llega es que si, eliminamos
+     * la relaciones que hay para poder insertar a continuación.
      */
     private function insertCategorias(EntityManagerInterface $entityManager, $entityInstance, bool $actualizar = false)
     {

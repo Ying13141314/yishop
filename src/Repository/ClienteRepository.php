@@ -30,6 +30,7 @@ class ClienteRepository extends ServiceEntityRepository implements PasswordUpgra
 
     /**
      * Used to upgrade (rehash) the user's password automatically over time.
+     * Código generado por symfony, sirve para actualizar la contraseña. No se usa
      */
     public function upgradePassword(UserInterface $user, string $newEncodedPassword): void
     {
@@ -41,13 +42,20 @@ class ClienteRepository extends ServiceEntityRepository implements PasswordUpgra
         $this->_em->persist($user);
         $this->_em->flush();
     }
-    
+
+    /**
+     * @param UserInterface $cliente
+     * @param array $datos
+     * @throws ORMException
+     * Actualizar el cliente a partir de los datos que recibimos
+     */
     public function update(UserInterface $cliente, array $datos): void
     {
         if (!$cliente instanceof Cliente) {
             throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', \get_class($cliente)));
         }
         
+        //Actualizamos la contraseña si nos introduce una nueva. La encriptamos ante de actualizar.
         if($datos['password']!=''){
             $cliente->setPassword($this->passwordEncoder->encodePassword($cliente, $datos['password']));
         }
@@ -69,6 +77,10 @@ class ClienteRepository extends ServiceEntityRepository implements PasswordUpgra
         }
     }
 
+    /**
+     * @return array
+     * Obtenemos los clientes en una array asociativo de la forma nombre => id para poder mostrarla en el select del panel admin.
+     */
     public function getChoices(): array
     {
         $lista = $this->createQueryBuilder('c', 'c.nombre')

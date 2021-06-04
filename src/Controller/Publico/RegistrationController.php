@@ -17,6 +17,11 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 
+/**
+ * Class RegistrationController
+ * @package App\Controller\Publico
+ * Clase generada por symfony.
+ */
 class RegistrationController extends AbstractController
 {
     private $emailVerifier;
@@ -52,7 +57,7 @@ class RegistrationController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
-//         generate a signed url and email it to the user
+            //generate a signed url and email it to the user
             $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
                 (new TemplatedEmail())
                     ->from(new Address('a_ying.lin@iespablopicasso.es', 'Ying Lin'))

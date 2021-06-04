@@ -22,6 +22,13 @@ class ProductoRepository extends ServiceEntityRepository
         parent::__construct($registry, Producto::class);
     }
 
+    /**
+     * @param int $offset
+     * @param string $tipo
+     * @param string $search
+     * @return Paginator
+     * Obtenemos todos los productos paginados, podemos recibir el tipo de producto y una búsqueda para poder filtrar.
+     */
     public function getAll(int $offset, string $tipo, string $search): Paginator
     {
         $query = $this->createQueryBuilder('producto')
@@ -53,6 +60,11 @@ class ProductoRepository extends ServiceEntityRepository
         return new Paginator($query->getQuery());
     }
 
+    /**
+     * @param $getId
+     * @return int|mixed[]|string
+     * Obtenemos si un producto tiene talla o no.
+     */
     public function conTalla($getId)
     {
         $query = $this->createQueryBuilder('producto')

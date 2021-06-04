@@ -18,7 +18,11 @@ class CategoriaRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Categoria::class);
     }
-    
+
+    /**
+     * @return array
+     * Obtenemos las categorias en una array asociativo de la forma nombre => id para poder mostrarla en el select del panel admin.
+     */
     public function getChoices(): array
     {
         $lista = $this->createQueryBuilder('c', 'c.nombre')

@@ -3,6 +3,9 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Cliente;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
 class ClientesCrudController extends AbstractCrudController
@@ -12,14 +15,14 @@ class ClientesCrudController extends AbstractCrudController
         return Cliente::class;
     }
 
-    /*
-    Publico function configureFields(string $pageName): iterable
+    /**
+     * @param Actions $actions
+     * @return Actions
+     * Quitamos la configuración de crear, editar y eliminar cliente
+     */
+    public function configureActions(Actions $actions): Actions
     {
-        return [
-            IdField::new('id'),
-            TextField::new('title'),
-            TextEditorField::new('description'),
-        ];
+        return $actions->add(CRUD::PAGE_INDEX, 'detail')
+            ->disable(Action::NEW, Action::DELETE, Action::EDIT); //Deshabilitar en el caso para eliminar
     }
-    */
 }

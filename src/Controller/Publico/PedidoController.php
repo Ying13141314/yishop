@@ -40,9 +40,10 @@ class PedidoController extends AbstractController
         if (!$carrito)
             return new RedirectResponse('/carrito/compra');
 
-        // comprobación cantidad
+        // Creamos un array vacio para guardar los productos que se van a agotar.
         $productosAgotados = [];
 
+        //Procesamos los datos del carrito para saber si se intentar comprar más producto de lo que hay.
         foreach ($carrito as $idProducto => $cantidades) {
             $producto = $productoRepository->find($idProducto);
             $nombreProducto = $producto->getNombre();
@@ -66,10 +67,12 @@ class PedidoController extends AbstractController
             }
         }
 
+        //Si hay productos agotado enviamos otra vez al carrito
         if (count($productosAgotados) > 0) {
             return $this->redirect($this->generateUrl('carrito_compra', ['productosAgotados' => $productosAgotados]));
         }
 
+        //renderizamos la vista
         return $this->render('publico/pedido/index.html.twig', [
             'cliente' => $cliente,
             'subtotal' => $subtotal,
@@ -138,6 +141,7 @@ class PedidoController extends AbstractController
 
         }
 
+        //Se limpia la sessión para limpiar el carrito
         $session->clear();
 
         return new RedirectResponse('/cliente');
@@ -148,6 +152,7 @@ class PedidoController extends AbstractController
      */
     public function detalles(int $id, DetalleRepository $detalleRepository, PedidoRepository $pedidoRepository)
     {
+        //obtenemos el detalle de los productos comprado.
         $detalles = $detalleRepository->detalles($id);
         
         return $this->json($detalles);

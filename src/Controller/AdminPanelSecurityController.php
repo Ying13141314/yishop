@@ -10,6 +10,11 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
+/**
+ * Class AdminPanelSecurityController
+ * @package App\Controller
+ * Clase generado por symfony.
+ */
 class AdminPanelSecurityController extends AbstractController
 {
     private UrlGeneratorInterface $urlGenerator;

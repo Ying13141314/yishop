@@ -14,6 +14,11 @@ use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * Class AdminDashboardController
+ * @package App\Controller\Admin
+ * Clase que genera el panel admin
+ */
 class AdminDashboardController extends AbstractDashboardController
 {
 
@@ -38,6 +43,10 @@ class AdminDashboardController extends AbstractDashboardController
         return $this->redirect($this->url->setController(UsuarioCrudController::class)->generateUrl());
     }
 
+    /**
+     * @return iterable
+     * Crear los menus laterales del panel admin.
+     */
     public function configureMenuItems(): iterable
     {
         return [

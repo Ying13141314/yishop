@@ -20,6 +20,11 @@ class PedidoRepository extends ServiceEntityRepository
         parent::__construct($registry, Pedido::class);
     }
 
+    /**
+     * @param $getId
+     * @return int|mixed[]|string
+     * Averiguamos si un producto tiene talla.
+     */
     public function conTalla($getId)
     {
         $query = $this->createQueryBuilder('pedido')

@@ -21,6 +21,11 @@ class DetalleRepository extends ServiceEntityRepository
     }
 
 
+    /**
+     * @param $pedidoId
+     * @return int|mixed[]|string
+     * Obtenemos las cantidades, las tallas y el nombre del producto que se compraron en un pedido.
+     */
     public function detalles($pedidoId)
     {
         $query = $this->createQueryBuilder('detalles')

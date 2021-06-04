@@ -32,7 +32,9 @@ class ClienteController extends AbstractController
      */
     public function update(Request $request, UserInterface $cliente, ClienteRepository $clienteRepository): Response
     {
+        //obtenemos todos los parámetros que el usuario actualiza en su formulario de perfil
         $datos = $request->request->all();
+        //Actualizamos con los nuevos datos
         $clienteRepository->update($cliente,$datos);
         return $this->json('ok');
         
