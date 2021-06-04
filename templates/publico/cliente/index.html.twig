@@ -98,8 +98,7 @@
                                 <td>{{ pedido.estado }}</td>
                                 <td>{{ pedido.direccion|raw }}</td>
                                 <td>
-                                    <button type="button" class="btn btn-primary btn-sm px-3" data-toggle="modal" 
-                                            data-target="#modal-detalles">
+                                    <button type="button" class="btn btn-primary btn-sm px-3 detalles-pedido" data-id="{{ pedido.id }}">
                                         <i class="fas fa-eye"></i>
                                     </button>
                                 </td>
@@ -128,26 +127,13 @@
                         <table class="table">
                             <thead>
                             <tr>
-                                <th scope="col">Nombre</th>
-                                <th scope="col">Cantidad</th>
-                                <th scope="col">Talla</th>
+                                <th class="text-center" scope="col">Nombre</th>
+                                <th class="text-center" scope="col">Cantidad</th>
+                                <th class="text-center" scope="col">Talla</th>
                             </tr>
                             </thead>
-                            <tbody>
-                            <tr>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
-                            </tr>
-                            <tr>
-                                <td>Jacob</td>
-                                <td>Thornton</td>
-                                <td>@fat</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2">Larry the Bird</td>
-                                <td>@twitter</td>
-                            </tr>
+                            <tbody id="modal-detalles-body">
+                                
                             </tbody>
                         </table>
                     </div>

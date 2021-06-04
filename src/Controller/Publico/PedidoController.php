@@ -5,6 +5,7 @@ namespace App\Controller\Publico;
 use App\Entity\Cliente;
 use App\Entity\DetallePedido;
 use App\Entity\Pedido;
+use App\Repository\DetalleRepository;
 use App\Repository\PedidoRepository;
 use App\Repository\ProductoRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -38,7 +39,7 @@ class PedidoController extends AbstractController
 
         if (!$carrito)
             return new RedirectResponse('/carrito/compra');
-        
+
         // comprobación cantidad
         $productosAgotados = [];
 
@@ -68,7 +69,7 @@ class PedidoController extends AbstractController
         if (count($productosAgotados) > 0) {
             return $this->redirect($this->generateUrl('carrito_compra', ['productosAgotados' => $productosAgotados]));
         }
-        
+
         return $this->render('publico/pedido/index.html.twig', [
             'cliente' => $cliente,
             'subtotal' => $subtotal,
@@ -83,13 +84,13 @@ class PedidoController extends AbstractController
         if (!$cliente instanceof Cliente) {
             throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', \get_class($cliente)));
         }
-        
+
         $session = $request->getSession();
         $carrito = $session->get('productos');
 
         if (!$carrito)
             return new RedirectResponse('/carrito/compra');
-        
+
 
         // generación pedido
         $entityManager = $this->getDoctrine()->getManager();
@@ -99,17 +100,17 @@ class PedidoController extends AbstractController
         $pedido->setDireccion($cliente->getDireccion());
         $pedido->setEstado(Pedido::EN_PROCESO);
         $pedido->setCliente($cliente);
-        
+
         $entityManager->persist($pedido);
         $entityManager->flush();
-        
+
         // generación detalles de pedido
         foreach ($carrito as $idProducto => $cantidades) {
             $producto = $productoRepository->find($idProducto);
             $precio = $producto->getPrecio();
-            
+
             foreach ($cantidades as $talla => $cantidad) {
-                
+
                 $detalles = new DetallePedido();
 
                 $detalles->setCantidad($cantidad);
@@ -120,9 +121,9 @@ class PedidoController extends AbstractController
 
                 $entityManager->persist($detalles);
                 $entityManager->flush();
-                
+
                 // se resta la cantidad comprada a los productos
-                
+
                 if ($talla === '') {
                     $cantidadActual = $producto->getCantidad();
                     $producto->setCantidad($cantidadActual - $cantidad);
@@ -134,12 +135,22 @@ class PedidoController extends AbstractController
                 $entityManager->persist($producto);
                 $entityManager->flush();
             }
-            
+
         }
 
         $session->clear();
 
         return new RedirectResponse('/cliente');
     }
-    
+
+    /**
+     * @Route("/pedido/{id}/detalles", name="pedido_detalles", methods={"GET"})
+     */
+    public function detalles(int $id, DetalleRepository $detalleRepository, PedidoRepository $pedidoRepository)
+    {
+        $detalles = $detalleRepository->detalles($id);
+        
+        return $this->json($detalles);
+    }
+
 }

@@ -19,4 +19,17 @@ class PedidoRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Pedido::class);
     }
+
+    public function conTalla($getId)
+    {
+        $query = $this->createQueryBuilder('pedido')
+            ->select('cat.con_talla')
+            ->leftJoin('producto.categorias', 'prod_cat')
+            ->leftJoin('prod_cat.categoria', 'cat')
+            ->where('producto.id = :id')
+            ->setParameter('id', $getId)
+            ->getQuery()->getArrayResult();
+
+        return $query;
+    }
 }
